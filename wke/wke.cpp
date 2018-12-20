@@ -696,11 +696,11 @@ void wkePerformCookieCommand(wkeWebView webView, wkeCookieCommand command)
     if (!curl)
         return;
 
-    std::string cookiesData = webView->getCookieJarPath();
+    std::string cookiesPath = webView->getCookieJarPath();
     CURLSH* curlsh = webView->getCurlShareHandle();
 
     curl_easy_setopt(curl, CURLOPT_SHARE, curlsh);
-    curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookiesData.c_str());
+    curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookiesPath.c_str());
     
     switch (command) {
     case wkeCookieCommandClearAllCookies:
@@ -853,6 +853,9 @@ void wkeSetFocus(wkeWebView webView)
     if (!webView)
         return;
     webView->setFocus();
+
+	if (webView->windowHandle())
+		::SetFocus(webView->windowHandle());
     OutputDebugStringA("wkeSetFocus\n");
 }
 
@@ -1482,7 +1485,7 @@ void wkeNodeOnCreateProcess(wkeWebView webWindow, wkeNodeOnCreateProcessCallback
 static String memBufToString(wkeMemBuf* stringType) {
     if (!stringType || !stringType->length)
         return String();
-    return String((const char*)stringType->data, stringType->length);
+	return blink::WebString::fromUTF8((const char*)stringType->data, stringType->length);
 }
 
 static void convertDragData(blink::WebDragData* data, const wkeWebDragData* webDragData)

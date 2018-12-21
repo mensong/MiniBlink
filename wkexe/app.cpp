@@ -198,13 +198,11 @@ void NetHookRequest(wkeWebView webView, void* param, const char *url, void *job,
 
 	int slen = ::WideCharToMultiByte(CP_UTF8, 0, str, -1, NULL, 0, NULL, NULL);
 	if (slen == 0) return;
-
 	char utf81[100];
 	::WideCharToMultiByte(CP_UTF8, 0, str, -1, &utf81[0], slen, NULL, NULL);
 
 	slen = ::WideCharToMultiByte(CP_UTF8, 0, str1, -1, NULL, 0, NULL, NULL);
 	if (slen == 0) return;
-
 	char utf82[100];
 	::WideCharToMultiByte(CP_UTF8, 0, str1, -1, &utf82[0], slen, NULL, NULL);
 

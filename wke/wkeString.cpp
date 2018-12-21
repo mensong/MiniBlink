@@ -97,7 +97,7 @@ const wchar_t* CString::stringW() const
         const wchar_t* wtfWide = stringBuf.data();
         size_t wtfWideLen = stringBuf.size();
 
-        m_wide = new wchar_t[wtfWideLen + 1];
+        m_wide = new wchar_t[wtfWideLen];
         memcpy(m_wide, wtfWide, (wtfWideLen + 1)* sizeof(wchar_t));
 
         m_wide[wtfWideLen] = 0;

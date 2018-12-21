@@ -291,14 +291,16 @@ void CWebView::loadHtmlWithBaseUrl(const utf8* html, const utf8* baseUrl)
     size_t length = strlen(html);
     if (0 == length)
         return;
-    String url = createMemoryUrl(); // String::format("MemoryURL://data.com/%d", GetTickCount());
-
-    blink::KURL kurl(blink::ParsedURLString, url);
+    
     blink::KURL kbaseUrl;
     if (baseUrl)
         kbaseUrl = blink::KURL(blink::ParsedURLString, baseUrl);
-    if (!kbaseUrl.isValid())
-        kbaseUrl = kurl;
+	if (!kbaseUrl.isValid())
+	{
+		String url = createMemoryUrl(); // String::format("MemoryURL://data.com/%d", GetTickCount());
+		blink::KURL kurl(blink::ParsedURLString, url);
+		kbaseUrl = kurl;
+	}
 
     m_webPage->loadHTMLString(content::WebPage::kMainFrameId, blink::WebData(html, length), kbaseUrl, kbaseUrl, true);
 }

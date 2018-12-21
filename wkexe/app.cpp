@@ -271,9 +271,38 @@ jsValue WKE_CALL_TYPE js_foo(jsExecState es, void* param)
 	return jsUndefined();
 }
 
+static int s_myVal = 1988;
+jsValue JS_CALL js_getMyVal(jsExecState es)
+{
+	return jsInt(s_myVal);
+}
+
+jsValue JS_CALL js_setMyVal(jsExecState es)
+{
+	s_myVal = jsToInt(es, jsArg(es, 0));
+
+	return jsUndefined();
+}
+
+jsValue WKE_CALL_TYPE js_getMyVal(jsExecState es, void* param)
+{
+	return jsInt(s_myVal);
+}
+
+jsValue WKE_CALL_TYPE js_setMyVal(jsExecState es, void* param)
+{
+	s_myVal = jsToInt(es, jsArg(es, 0));
+
+	return jsUndefined();
+}
+
 void InitJsBinding()
 {
 	wkeJsBindFunction("foo", js_foo, NULL, 1);
+	jsBindGetter("myVal", js_getMyVal);
+	jsBindSetter("myVal", js_setMyVal);
+	wkeJsBindGetter("wmyVal", js_getMyVal, NULL);
+	wkeJsBindSetter("wmyVal", js_setMyVal, NULL);
 }
 
 void RunApplication(Application* app)

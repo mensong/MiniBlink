@@ -1572,6 +1572,9 @@ static Vector<jsFunctionInfo>* s_jsFunctionsPtr = nullptr;
 
 static jsValue wkeJsBindFunctionWrap(jsExecState es, void* param)
 {
+	if (0 == param)
+		return jsUndefined();
+
     jsNativeFunction fn = (jsNativeFunction)param;
     return fn(es);
 }
@@ -1592,7 +1595,16 @@ static void wkeJsBindSetterGetter(const char* name, wkeJsNativeFunction fn, void
 
     for (unsigned int i = 0; i < s_jsFunctions.size(); ++i) {
         if (strcmp(name, s_jsFunctions[i].name) == 0) {
-            JS_GETTER == funcType ? s_jsFunctions[i].gettet = fn : s_jsFunctions[i].settet = fn;
+			if (JS_GETTER == funcType)
+			{
+				s_jsFunctions[i].gettet = fn;
+				s_jsFunctions[i].getterParam = param;
+			}
+			else
+			{
+				s_jsFunctions[i].settet = fn;
+				s_jsFunctions[i].setterParam = param;
+			}
             return;
         }
     }
@@ -1600,8 +1612,16 @@ static void wkeJsBindSetterGetter(const char* name, wkeJsNativeFunction fn, void
     jsFunctionInfo funcInfo;
     strcpy(funcInfo.name, name);
     funcInfo.name[MAX_NAME_LENGTH - 1] = '\0';
-    JS_GETTER == funcType ? funcInfo.gettet = fn : funcInfo.settet = fn;
-    JS_GETTER == funcType ? funcInfo.getterParam = param : funcInfo.setterParam = param;
+	if (JS_GETTER == funcType)
+	{
+		funcInfo.gettet = fn;
+		funcInfo.getterParam = param;
+	}
+	else
+	{
+		funcInfo.settet = fn;
+		funcInfo.setterParam = param;
+	}
 
     funcInfo.argCount = 0;
     funcInfo.funcType |= funcType;
@@ -1658,7 +1678,7 @@ void wkeJsBindGetter(const char* name, wkeJsNativeFunction fn, void* param)
 
 void wkeJsBindSetter(const char* name, wkeJsNativeFunction fn, void* param)
 {
-    wkeJsBindSetterGetter(name, fn, param, JS_GETTER);
+    wkeJsBindSetterGetter(name, fn, param, JS_SETTER);
 }
 
 jsValue js_outputMsg(jsExecState es, void* param)

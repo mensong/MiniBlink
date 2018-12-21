@@ -1252,10 +1252,10 @@ void WebURLLoaderManager::dispatchSynchronousJob(WebURLLoaderInternal* job)
         void* hookBuf = job->m_hookBufForEndHook ? job->m_hookBufForEndHook->data() : nullptr;
         int hookLength = job->m_hookBufForEndHook ? job->m_hookBufForEndHook->size() : 0;
 
-        wkeLoadUrlEndCallback loadUrlEndCallback = page->wkeHandler().loadUrlEndCallback;
-        void* loadUrlEndCallbackParam = page->wkeHandler().loadUrlEndCallbackParam;
-        if (1 == job->m_isHookRequest && loadUrlEndCallback)
-            loadUrlEndCallback(page->wkeWebView(), loadUrlEndCallbackParam, urlBuf.data(), job, hookBuf, hookLength);
+		wkeNetHookRequestCallback netHookRequestCallback = page->wkeHandler().netHookRequestCallback;
+        void* netHookRequestCallbackParam = page->wkeHandler().netHookRequestCallbackParam;
+        if (1 == job->m_isHookRequest && netHookRequestCallback)
+			netHookRequestCallback(page->wkeWebView(), netHookRequestCallbackParam, urlBuf.data(), job, hookBuf, hookLength);
 
         if (job->m_hookBufForEndHook)
             didReceiveDataOrDownload(job, static_cast<char*>(job->m_hookBufForEndHook->data()), hookLength, 0);

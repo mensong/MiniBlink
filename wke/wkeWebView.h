@@ -84,8 +84,8 @@ struct CWebViewHandler {
     wkeLoadUrlBeginCallback loadUrlBeginCallback;
     void* loadUrlBeginCallbackParam;
 
-    wkeLoadUrlEndCallback loadUrlEndCallback;
-    void* loadUrlEndCallbackParam;
+	wkeNetHookRequestCallback netHookRequestCallback;
+    void* netHookRequestCallbackParam;
 
     wkeDidCreateScriptContextCallback didCreateScriptContextCallback;
     void* didCreateScriptContextCallbackParam;
@@ -268,7 +268,7 @@ public:
     void onNetResponse(wkeNetResponseCallback callback, void* callbackParam);
     
     void onLoadUrlBegin(wkeLoadUrlBeginCallback callback, void* callbackParam);
-    void onLoadUrlEnd(wkeLoadUrlEndCallback callback, void* callbackParam);
+    void onNetHookRequest(wkeNetHookRequestCallback callback, void* callbackParam);
 
     void onDidCreateScriptContext(wkeDidCreateScriptContextCallback callback, void* callbackParam);
     void onWillReleaseScriptContext(wkeWillReleaseScriptContextCallback callback, void* callbackParam);

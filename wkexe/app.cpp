@@ -169,21 +169,29 @@ wkeWebView HandleCreateView(wkeWebView webWindow, void* param, wkeNavigationType
     wkeShowWindow(newWindow, true);
     return newWindow;
 }
+
 bool HandleLoadUrlBegin(wkeWebView webView, void* param, const char *url, void *job)
 {
 	if (strcmp(url, "http://hook.test/") == 0) {
 		wkeNetSetMIMEType(job, "text/html");
         wkeNetChangeRequestUrl(job, url);
-		wkeNetSetData(job, "<li>这是个hook页面</li><a herf=\"http://www.baidu.com/\">HookRequest</a>", sizeof("<li>这是个hook页面</li><a herf=\"http://www.baidu.com/\">HookRequest</a>"));
+		const char* pHtml = "<html><body><li>这是个hook页面</li><a href=\"https://www.baidu.com/\">HookRequest</a></body></html>";
+		wkeNetSetData(job, (void*)pHtml, strlen(pHtml) + 1);
 		return true;
 	}
-	else if (strcmp(url, "http://www.baidu.com/") == 0) {
+	else if (strcmp(url, "https://www.baidu.com/") == 0) {
 		wkeNetHookRequest(job);
+	}
+	else if (strcmp(url, "https://www.hao123.com/") == 0) {
+		wkeNetChangeRequestUrl(job, "https://www.baidu.com");
+	}
+	else if (strcmp(url, "https://www.google.com/") == 0) {
+		return true;
 	}
 	return false;
 }
 
-void HandleLoadUrlEnd(wkeWebView webView, void* param, const char *url, void *job, void* buf, int len)
+void NetHookRequest(wkeWebView webView, void* param, const char *url, void *job, void* buf, int len)
 {
 	wchar_t *str = L"百度一下";
 	wchar_t *str1 = L"HOOK一下";
@@ -222,7 +230,7 @@ BOOL CreateWebWindow(Application* app)
     wkeOnTitleChanged(app->window, HandleTitleChanged, app);
     wkeOnCreateView(app->window, HandleCreateView, app);
 	wkeOnLoadUrlBegin(app->window, HandleLoadUrlBegin, app);
-	wkeOnLoadUrlEnd(app->window, HandleLoadUrlEnd, app);
+	wkeOnNetHookRequest(app->window, NetHookRequest, app);
 
     wkeMoveToCenter(app->window);
     wkeLoadURLW(app->window, app->url);

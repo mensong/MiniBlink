@@ -771,14 +771,14 @@ void WebURLLoaderManagerMainTask::handleHookRequestOnMainThread(WebURLLoaderInte
         return;
     RequestExtraData* requestExtraData = reinterpret_cast<RequestExtraData*>(job->firstRequest()->extraData());
     content::WebPage* page = requestExtraData->page;
-    if (!page->wkeHandler().loadUrlEndCallback)
+    if (!page->wkeHandler().netHookRequestCallback)
         return;
 
     Vector<char> urlBuf = WTF::ensureStringToUTF8(job->firstRequest()->url().string(), true);
-    void* loadUrlEndCallbackParam = page->wkeHandler().loadUrlEndCallbackParam;
+    void* netHookRequestCallbackParam = page->wkeHandler().netHookRequestCallbackParam;
     void* data = job->m_hookBufForEndHook ? job->m_hookBufForEndHook->data() : nullptr;
     size_t size = job->m_hookBufForEndHook ? job->m_hookBufForEndHook->size() : 0;
-    page->wkeHandler().loadUrlEndCallback(page->wkeWebView(), loadUrlEndCallbackParam, urlBuf.data(), job, data, size);
+    page->wkeHandler().netHookRequestCallback(page->wkeWebView(), netHookRequestCallbackParam, urlBuf.data(), job, data, size);
 }
 
 }

@@ -1083,12 +1083,6 @@ void wkeOnLoadUrlBegin(wkeWebView webView, wkeLoadUrlBeginCallback callback, voi
     webView->onLoadUrlBegin(callback, callbackParam);
 }
 
-void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->onLoadUrlEnd(callback, callbackParam);
-}
-
 void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback callback, void* callbackParam)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);

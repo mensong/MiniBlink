@@ -558,7 +558,7 @@ typedef bool(*wkeLoadUrlBeginCallback)(wkeWebView webView, void* param, const ch
 WKE_API void wkeOnLoadUrlBegin(wkeWebView webView, wkeLoadUrlBeginCallback callback, void* callbackParam);
 
 typedef void(*wkeLoadUrlEndCallback)(wkeWebView webView, void* param, const char *url, void* job, void* buf, int len);
-WKE_API void wkeOnLoadUrlEnd(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam);
+WKE_API void wkeOnNetHookRequest(wkeWebView webView, wkeLoadUrlEndCallback callback, void* callbackParam);
 
 typedef void(*wkeDidCreateScriptContextCallback)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, void* context, int extensionGroup, int worldId);
 WKE_API void wkeOnDidCreateScriptContext(wkeWebView webView, wkeDidCreateScriptContextCallback callback, void* callbackParam);

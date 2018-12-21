@@ -1248,10 +1248,10 @@ void CWebView::onLoadUrlBegin(wkeLoadUrlBeginCallback callback, void* callbackPa
     m_webPage->wkeHandler().loadUrlBeginCallbackParam = callbackParam;
 }
 
-void CWebView::onLoadUrlEnd(wkeLoadUrlEndCallback callback, void* callbackParam)
+void CWebView::onNetHookRequest(wkeNetHookRequestCallback callback, void* callbackParam)
 {
-    m_webPage->wkeHandler().loadUrlEndCallback = callback;
-    m_webPage->wkeHandler().loadUrlEndCallbackParam = callbackParam;
+    m_webPage->wkeHandler().netHookRequestCallback = callback;
+    m_webPage->wkeHandler().netHookRequestCallbackParam = callbackParam;
 }
 
 void CWebView::onDidCreateScriptContext(wkeDidCreateScriptContextCallback callback, void* callbackParam)

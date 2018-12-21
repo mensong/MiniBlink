@@ -20,6 +20,7 @@
 #include "net/WebURLLoaderManagerSetupInfo.h"
 #include "net/WebURLLoaderManager.h"
 #include "net/HeaderVisitor.h"
+#include "wkeWebView.h"
 
 void wkeNetSetHTTPHeaderField(wkeNetJob jobPtr, wchar_t* key, wchar_t* value, bool response)
 {
@@ -561,6 +562,12 @@ void wkeNetCancelWebUrlRequest(int requestId)
         return;
     NetUrlRequest* netRequest = (NetUrlRequest*)jobHead;
     netRequest->cancel();
+}
+
+void wkeOnNetHookRequest(wkeWebView webView, wkeNetHookRequestCallback callback, void* callbackParam)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	webView->onNetHookRequest(callback, callbackParam);
 }
 
 namespace wke {

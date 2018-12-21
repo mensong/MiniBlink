@@ -897,7 +897,6 @@ public:
     ITERATOR1(const utf8*, wkeGetTitle, wkeWebView webView, "") \
     ITERATOR1(const wchar_t*, wkeGetTitleW, wkeWebView webView, "") \
     \
-    ITERATOR3(void, wkeResize, wkeWebView webView, int w, int h, "") \
     ITERATOR1(int, wkeGetWidth, wkeWebView webView, "") \
     ITERATOR1(int, wkeGetHeight, wkeWebView webView, "") \
     ITERATOR1(int, wkeGetContentWidth, wkeWebView webView, "") \

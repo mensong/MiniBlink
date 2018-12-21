@@ -511,12 +511,6 @@ const wchar_t* wkeGetTitleW(wkeWebView webView)
     return webView->titleW();
 }
 
-void wkeResize(wkeWebView webView, int w, int h)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->resize(w, h);
-}
-
 int wkeGetWidth(wkeWebView webView)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);

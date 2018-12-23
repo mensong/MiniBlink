@@ -1681,13 +1681,12 @@ void WebPageImpl::loadRequest(int64 frameId, const blink::WebURLRequest& request
     if (!m_webViewImpl || !m_webViewImpl->mainFrame())
         return;
 
-    blink::WebURLRequest requestWrap(request);
     WebFrame* webFrame = getWebFrameFromFrameId(frameId);
     if (!webFrame)
         return;
 
     //AutoRecordActions autoRecordActions(this, m_layerTreeHost, false);
-    
+	blink::WebURLRequest requestWrap(request);
     requestWrap.setHTTPHeaderField(WebString::fromLatin1("Accept"), WebString::fromLatin1("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"));
     webFrame->loadRequest(requestWrap);
     m_webViewImpl->setFocus(true);

@@ -859,11 +859,12 @@ public:
     \
     ITERATOR4(void, wkeShowDevtools, wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param, "") \
     \
-    ITERATOR2(void, wkeLoadW, wkeWebView webView, const wchar_t* url, "") \
     ITERATOR2(void, wkeLoadURL, wkeWebView webView, const utf8* url, "") \
     ITERATOR2(void, wkeLoadURLW, wkeWebView webView, const wchar_t* url, "") \
     ITERATOR4(void, wkePostURL, wkeWebView wkeView, const utf8* url, const char* postData, int postLen, "") \
     ITERATOR4(void, wkePostURLW, wkeWebView wkeView, const wchar_t* url, const char* postData, int postLen, "") \
+	ITERATOR5(void, wkePostURL2, wkeWebView wkeView, const utf8* url, const char* postData, int postLen, const utf8* contentType, "") \
+    ITERATOR5(void, wkePostURLW2, wkeWebView wkeView, const wchar_t* url, const char* postData, int postLen, const wchar_t* contentType, "") \
     \
     ITERATOR2(void, wkeLoadHTML, wkeWebView webView, const utf8* html, "") \
     ITERATOR3(void, wkeLoadHtmlWithBaseUrl, wkeWebView webView, const utf8* html, const utf8* baseUrl, "") \

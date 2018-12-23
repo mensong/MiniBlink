@@ -108,7 +108,7 @@ void CWebView::setTransparent(bool transparent)
     m_webPage->setTransparent(transparent);
 }
 
-void CWebView::loadPostURL(const utf8* inUrl, const char * poastData, int nLen )
+void CWebView::loadPostURL(const utf8* inUrl, const char * poastData, int nLen, const char* contentType/* = "application/x-www-form-urlencoded"*/)
 {
     blink::KURL url(blink::ParsedURLString, inUrl);
     if (!url.isValid())
@@ -131,6 +131,7 @@ void CWebView::loadPostURL(const utf8* inUrl, const char * poastData, int nLen )
     blink::WebURLRequest request(url);
     request.setCachePolicy(blink::WebURLRequest::UseProtocolCachePolicy);
     request.setHTTPMethod(blink::WebString::fromUTF8("POST"));
+	request.setHTTPHeaderField(WebString::fromLatin1("Content-Type"), WebString::fromLatin1(contentType));
 
     blink::WebHTTPBody body;
     body.initialize();
@@ -139,9 +140,9 @@ void CWebView::loadPostURL(const utf8* inUrl, const char * poastData, int nLen )
     m_webPage->loadRequest(content::WebPage::kMainFrameId, request);
 }
 
-void CWebView::loadPostURL(const wchar_t * inUrl,const char * poastData, int nLen)
+void CWebView::loadPostURL(const wchar_t * inUrl,const char * poastData, int nLen, const wchar_t* contentType/* = L"application/x-www-form-urlencoded"*/)
 {
-    loadPostURL(String(inUrl).utf8().data(), poastData,nLen);
+    loadPostURL(String(inUrl).utf8().data(), poastData, nLen, String(contentType).utf8().data());
 }
 
 static bool checkIsFileUrl(const utf8* inUrl)

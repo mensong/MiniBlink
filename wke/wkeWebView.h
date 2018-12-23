@@ -131,8 +131,8 @@ public:
     void loadURL(const utf8* inUrl) override;
     void loadURL(const wchar_t* url) override;
     
-    void loadPostURL(const utf8* inUrl,const char * poastData,int nLen);
-    void loadPostURL(const wchar_t * inUrl,const char * poastData,int nLen);
+    void loadPostURL(const utf8* inUrl,const char * poastData,int nLen, const char* contentType="application/x-www-form-urlencoded");
+    void loadPostURL(const wchar_t * inUrl,const char * poastData,int nLen, const wchar_t* contentType = L"application/x-www-form-urlencoded");
 
     void loadHTML(const utf8* html) override;
     void loadHtmlWithBaseUrl(const utf8* html, const utf8* baseUrl);

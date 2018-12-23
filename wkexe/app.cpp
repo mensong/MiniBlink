@@ -296,13 +296,48 @@ jsValue WKE_CALL_TYPE js_setMyVal(jsExecState es, void* param)
 	return jsUndefined();
 }
 
-void InitJsBinding()
+jsValue WKE_CALL_TYPE js_loadUrl(jsExecState es, void* param)
+{
+	Application* app = (Application*)param;
+
+	int nArgc = jsArgCount(es);
+	if (nArgc == 1)
+	{
+		const utf8* url = jsToString(es, jsArg(es, 0));
+		wkeLoadURL(app->window, url);
+	}
+
+	return jsUndefined();
+}
+
+/*
+  js调用：postUrl('http://xxxx', 'data', 'content type');
+*/
+jsValue WKE_CALL_TYPE js_postUrl(jsExecState es, void* param)
+{
+	Application* app = (Application*)param;
+
+	int nArgc = jsArgCount(es);
+	if (nArgc == 3)
+	{
+		const utf8* url = jsToString(es, jsArg(es, 0));
+		const utf8* data = jsToString(es, jsArg(es, 1));
+		const utf8* dataType = jsToString(es, jsArg(es, 2));
+		wkePostURL2(app->window, url, data, strlen(data), dataType);
+	}
+
+	return jsUndefined();
+}
+
+void InitJsBinding(Application* app)
 {
 	wkeJsBindFunction("foo", js_foo, NULL, 1);
 	jsBindGetter("myVal", js_getMyVal);
 	jsBindSetter("myVal", js_setMyVal);
 	wkeJsBindGetter("wmyVal", js_getMyVal, NULL);
 	wkeJsBindSetter("wmyVal", js_setMyVal, NULL);
+	wkeJsBindFunction("loadUrl", js_loadUrl, app, 1);
+	wkeJsBindFunction("postUrl", js_postUrl, app, 3);
 }
 
 void RunApplication(Application* app)
@@ -322,7 +357,7 @@ void RunApplication(Application* app)
 		wcsncpy_s(app->url, MAX_PATH, L"http://www.baidu.com", MAX_PATH);
     }
 
-	InitJsBinding();
+	InitJsBinding(app);
 
     if (!CreateWebWindow(app))
     {

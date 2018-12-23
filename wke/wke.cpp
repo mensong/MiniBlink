@@ -391,10 +391,16 @@ void wkePostURLW(wkeWebView wkeView,const wchar_t * url,const char *szPostData,i
     wkeView->loadPostURL(url,szPostData,nLen);
 }
 
-void wkeLoadW(wkeWebView webView, const wchar_t* url)
+void wkePostURL2(wkeWebView wkeView, const utf8 * url, const char *szPostData, int nLen, const utf8* contentType)
 {
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    wkeLoadURLW(webView, url);
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	wkeView->loadPostURL(url, szPostData, nLen, contentType);
+}
+
+void wkePostURLW2(wkeWebView wkeView, const wchar_t * url, const char *szPostData, int nLen, const wchar_t* contentType)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	wkeView->loadPostURL(url, szPostData, nLen, contentType);
 }
 
 void wkeLoadURL(wkeWebView webView, const utf8* url)

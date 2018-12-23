@@ -91,7 +91,7 @@ void NavigationController::navigate(int offset)
 
 #if 0 // def DEBUG
     OutputDebugStringA("navigate:\n");
-    for (size_t i = 0; i < m_items.size(); ++i) {
+    for (int i = 0; i < m_items.size(); ++i) {
         HistoryEntry* it = m_items[i];
         String url = it->urlString();
         OutputDebugStringA(url.utf8().data());
@@ -120,12 +120,12 @@ void NavigationController::navigateToIndex(int index)
 int NavigationController::findEntry(const blink::WebHistoryItem& item) const
 {
     if (m_lastNavDirection > 0) {
-        for (size_t i = m_currentOffset + 1; i < m_items.size(); ++i) {
+        for (int i = m_currentOffset + 1; i < m_items.size(); ++i) {
             if (m_items[i]->urlString() == item.urlString())
                 return i;
         }
     } else {
-        for (size_t i = m_currentOffset - 1; i >= 0; --i) {
+        for (int i = m_currentOffset - 1; i >= 0; --i) {
             if (m_items[i]->urlString() == item.urlString())
                 return i;
         }
@@ -162,7 +162,7 @@ void NavigationController::insertOrReplaceEntry(const blink::WebHistoryItem& ite
             m_items.append(historyItem);
         } else {
             m_items[m_currentOffset] = historyItem;
-            for (size_t i = m_currentOffset + 1; i < m_items.size(); ++i)
+            for (int i = m_currentOffset + 1; i < m_items.size(); ++i)
                 delete m_items[i];
             m_items.resize(m_currentOffset + 1);
         }

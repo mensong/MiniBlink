@@ -720,7 +720,7 @@ void CWebWindow::moveToCenter()
 
     int parentWidth = 0;
     int parentHeight = 0;
-    if (WS_CHILD == ::GetWindowLong(m_hWnd, GWL_STYLE)) {
+    if (0 != (::GetWindowLong(m_hWnd, GWL_STYLE) & WS_CHILD)) {
         HWND parent = ::GetParent(m_hWnd);
         RECT rect = { 0 };
         ::GetClientRect(parent, &rect);

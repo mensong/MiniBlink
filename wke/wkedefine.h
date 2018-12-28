@@ -1,9 +1,11 @@
 ﻿/*
 *
 * wolar@qq.com
+* gergul@qq.com
 * http://miniblink.net
 * https://github.com/weolar/miniblink49
-* https://weolar.github.io/miniblink/doc-main.html api文档地址
+* https://github.com/gergul/MiniBlink
+* https://gergul.github.io/MiniBlink/doc-main.html api文档地址
 * licence Apache-2.0
 *
 */
@@ -17,42 +19,42 @@
 #define WKE_CALL_TYPE __cdecl
 
 typedef struct {
-    int x;
-    int y;
-    int w;
-    int h;
+	int x;
+	int y;
+	int w;
+	int h;
 } wkeRect;
 
 typedef struct {
-    int x;
-    int y;
+	int x;
+	int y;
 } wkePoint;
 
 typedef enum {
-    WKE_LBUTTON = 0x01,
-    WKE_RBUTTON = 0x02,
-    WKE_SHIFT = 0x04,
-    WKE_CONTROL = 0x08,
-    WKE_MBUTTON = 0x10,
+	WKE_LBUTTON = 0x01,
+	WKE_RBUTTON = 0x02,
+	WKE_SHIFT = 0x04,
+	WKE_CONTROL = 0x08,
+	WKE_MBUTTON = 0x10,
 } wkeMouseFlags;
 
 typedef enum {
-    WKE_EXTENDED = 0x0100,
-    WKE_REPEAT = 0x4000,
+	WKE_EXTENDED = 0x0100,
+	WKE_REPEAT = 0x4000,
 } wkeKeyFlags;
 
 typedef enum {
-    WKE_MSG_MOUSEMOVE = 0x0200,
-    WKE_MSG_LBUTTONDOWN = 0x0201,
-    WKE_MSG_LBUTTONUP = 0x0202,
-    WKE_MSG_LBUTTONDBLCLK = 0x0203,
-    WKE_MSG_RBUTTONDOWN = 0x0204,
-    WKE_MSG_RBUTTONUP = 0x0205,
-    WKE_MSG_RBUTTONDBLCLK = 0x0206,
-    WKE_MSG_MBUTTONDOWN = 0x0207,
-    WKE_MSG_MBUTTONUP = 0x0208,
-    WKE_MSG_MBUTTONDBLCLK = 0x0209,
-    WKE_MSG_MOUSEWHEEL = 0x020A,
+	WKE_MSG_MOUSEMOVE = 0x0200,
+	WKE_MSG_LBUTTONDOWN = 0x0201,
+	WKE_MSG_LBUTTONUP = 0x0202,
+	WKE_MSG_LBUTTONDBLCLK = 0x0203,
+	WKE_MSG_RBUTTONDOWN = 0x0204,
+	WKE_MSG_RBUTTONUP = 0x0205,
+	WKE_MSG_RBUTTONDBLCLK = 0x0206,
+	WKE_MSG_MBUTTONDOWN = 0x0207,
+	WKE_MSG_MBUTTONUP = 0x0208,
+	WKE_MSG_MBUTTONDBLCLK = 0x0209,
+	WKE_MSG_MOUSEWHEEL = 0x020A,
 } wkeMouseMsg;
 
 #if !defined(__cplusplus)
@@ -107,35 +109,35 @@ typedef struct _tagWkeMediaPlayerClient* wkeMediaPlayerClient;
 #endif
 
 typedef enum {
-    WKE_PROXY_NONE,
-    WKE_PROXY_HTTP,
-    WKE_PROXY_SOCKS4,
-    WKE_PROXY_SOCKS4A,
-    WKE_PROXY_SOCKS5,
-    WKE_PROXY_SOCKS5HOSTNAME
+	WKE_PROXY_NONE,
+	WKE_PROXY_HTTP,
+	WKE_PROXY_SOCKS4,
+	WKE_PROXY_SOCKS4A,
+	WKE_PROXY_SOCKS5,
+	WKE_PROXY_SOCKS5HOSTNAME
 } wkeProxyType;
 
 typedef struct {
-    wkeProxyType type;
-    char hostname[100];
-    unsigned short port;
-    char username[50];
-    char password[50];
+	wkeProxyType type;
+	char hostname[100];
+	unsigned short port;
+	char username[50];
+	char password[50];
 } wkeProxy;
 
 enum wkeSettingMask {
-    WKE_SETTING_PROXY = 1,
-    WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD = 1 << 2,
+	WKE_SETTING_PROXY = 1,
+	WKE_SETTING_PAINTCALLBACK_IN_OTHER_THREAD = 1 << 2,
 };
 
 typedef struct _wkeSettings {
-    wkeProxy proxy;
-    unsigned int mask;
+	wkeProxy proxy;
+	unsigned int mask;
 } wkeSettings;
 
 typedef struct {
-    int size;
-    unsigned int bgColor;
+	int size;
+	unsigned int bgColor;
 } wkeViewSettings;
 
 typedef void* wkeWebFrameHandle;
@@ -158,229 +160,227 @@ typedef void(WKE_CALL_TYPE *ON_TITLE_CHANGED) (const struct _wkeClientHandler* c
 typedef void(WKE_CALL_TYPE *ON_URL_CHANGED) (const struct _wkeClientHandler* clientHandler, const wkeString url);
 
 typedef struct _wkeClientHandler {
-    ON_TITLE_CHANGED onTitleChanged;
-    ON_URL_CHANGED onURLChanged;
+	ON_TITLE_CHANGED onTitleChanged;
+	ON_URL_CHANGED onURLChanged;
 } wkeClientHandler;
 
 typedef bool(WKE_CALL_TYPE * wkeCookieVisitor)(
-    void* params,
-    const char* name,
-    const char* value,
-    const char* domain,
-    const char* path, // If |path| is non-empty only URLs at or below the path will get the cookie value.
-    int secure, // If |secure| is true the cookie will only be sent for HTTPS requests.
-    int httpOnly, // If |httponly| is true the cookie will only be sent for HTTP requests.
-    int* expires // The cookie expiration date is only valid if |has_expires| is true.
-    );
+	void* params,
+	const char* name,
+	const char* value,
+	const char* domain,
+	const char* path, // If |path| is non-empty only URLs at or below the path will get the cookie value.
+	int secure, // If |secure| is true the cookie will only be sent for HTTPS requests.
+	int httpOnly, // If |httponly| is true the cookie will only be sent for HTTP requests.
+	int* expires // The cookie expiration date is only valid if |has_expires| is true.
+	);
 
 typedef enum {
-    wkeCookieCommandClearAllCookies,
-    wkeCookieCommandClearSessionCookies,
-    wkeCookieCommandFlushCookiesToFile,
-    wkeCookieCommandReloadCookiesFromFile,
+	wkeCookieCommandClearAllCookies,
+	wkeCookieCommandClearSessionCookies,
+	wkeCookieCommandFlushCookiesToFile,
+	wkeCookieCommandReloadCookiesFromFile,
 } wkeCookieCommand;
 
 typedef enum {
-    WKE_NAVIGATION_TYPE_LINKCLICK,
-    WKE_NAVIGATION_TYPE_FORMSUBMITTE,
-    WKE_NAVIGATION_TYPE_BACKFORWARD,
-    WKE_NAVIGATION_TYPE_RELOAD,
-    WKE_NAVIGATION_TYPE_FORMRESUBMITT,
-    WKE_NAVIGATION_TYPE_OTHER
+	WKE_NAVIGATION_TYPE_LINKCLICK,
+	WKE_NAVIGATION_TYPE_FORMSUBMITTE,
+	WKE_NAVIGATION_TYPE_BACKFORWARD,
+	WKE_NAVIGATION_TYPE_RELOAD,
+	WKE_NAVIGATION_TYPE_FORMRESUBMITT,
+	WKE_NAVIGATION_TYPE_OTHER
 } wkeNavigationType;
 
 typedef enum {
-    WkeCursorInfoPointer,
-    WkeCursorInfoCross,
-    WkeCursorInfoHand,
-    WkeCursorInfoIBeam,
-    WkeCursorInfoWait,
-    WkeCursorInfoHelp,
-    WkeCursorInfoEastResize,
-    WkeCursorInfoNorthResize,
-    WkeCursorInfoNorthEastResize,
-    WkeCursorInfoNorthWestResize,
-    WkeCursorInfoSouthResize,
-    WkeCursorInfoSouthEastResize,
-    WkeCursorInfoSouthWestResize,
-    WkeCursorInfoWestResize,
-    WkeCursorInfoNorthSouthResize,
-    WkeCursorInfoEastWestResize,
-    WkeCursorInfoNorthEastSouthWestResize,
-    WkeCursorInfoNorthWestSouthEastResize,
-    WkeCursorInfoColumnResize,
-    WkeCursorInfoRowResize,
-    WkeCursorInfoMiddlePanning,
-    WkeCursorInfoEastPanning,
-    WkeCursorInfoNorthPanning,
-    WkeCursorInfoNorthEastPanning,
-    WkeCursorInfoNorthWestPanning,
-    WkeCursorInfoSouthPanning,
-    WkeCursorInfoSouthEastPanning,
-    WkeCursorInfoSouthWestPanning,
-    WkeCursorInfoWestPanning,
-    WkeCursorInfoMove,
-    WkeCursorInfoVerticalText,
-    WkeCursorInfoCell,
-    WkeCursorInfoContextMenu,
-    WkeCursorInfoAlias,
-    WkeCursorInfoProgress,
-    WkeCursorInfoNoDrop,
-    WkeCursorInfoCopy,
-    WkeCursorInfoNone,
-    WkeCursorInfoNotAllowed,
-    WkeCursorInfoZoomIn,
-    WkeCursorInfoZoomOut,
-    WkeCursorInfoGrab,
-    WkeCursorInfoGrabbing,
-    WkeCursorInfoCustom
+	WkeCursorInfoPointer,
+	WkeCursorInfoCross,
+	WkeCursorInfoHand,
+	WkeCursorInfoIBeam,
+	WkeCursorInfoWait,
+	WkeCursorInfoHelp,
+	WkeCursorInfoEastResize,
+	WkeCursorInfoNorthResize,
+	WkeCursorInfoNorthEastResize,
+	WkeCursorInfoNorthWestResize,
+	WkeCursorInfoSouthResize,
+	WkeCursorInfoSouthEastResize,
+	WkeCursorInfoSouthWestResize,
+	WkeCursorInfoWestResize,
+	WkeCursorInfoNorthSouthResize,
+	WkeCursorInfoEastWestResize,
+	WkeCursorInfoNorthEastSouthWestResize,
+	WkeCursorInfoNorthWestSouthEastResize,
+	WkeCursorInfoColumnResize,
+	WkeCursorInfoRowResize,
+	WkeCursorInfoMiddlePanning,
+	WkeCursorInfoEastPanning,
+	WkeCursorInfoNorthPanning,
+	WkeCursorInfoNorthEastPanning,
+	WkeCursorInfoNorthWestPanning,
+	WkeCursorInfoSouthPanning,
+	WkeCursorInfoSouthEastPanning,
+	WkeCursorInfoSouthWestPanning,
+	WkeCursorInfoWestPanning,
+	WkeCursorInfoMove,
+	WkeCursorInfoVerticalText,
+	WkeCursorInfoCell,
+	WkeCursorInfoContextMenu,
+	WkeCursorInfoAlias,
+	WkeCursorInfoProgress,
+	WkeCursorInfoNoDrop,
+	WkeCursorInfoCopy,
+	WkeCursorInfoNone,
+	WkeCursorInfoNotAllowed,
+	WkeCursorInfoZoomIn,
+	WkeCursorInfoZoomOut,
+	WkeCursorInfoGrab,
+	WkeCursorInfoGrabbing,
+	WkeCursorInfoCustom
 } WkeCursorInfoType;
 
 typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
+	int x;
+	int y;
+	int width;
+	int height;
 
-    bool menuBarVisible;
-    bool statusBarVisible;
-    bool toolBarVisible;
-    bool locationBarVisible;
-    bool scrollbarsVisible;
-    bool resizable;
-    bool fullscreen;
+	bool menuBarVisible;
+	bool statusBarVisible;
+	bool toolBarVisible;
+	bool locationBarVisible;
+	bool scrollbarsVisible;
+	bool resizable;
+	bool fullscreen;
 } wkeWindowFeatures;
 
 typedef struct {
-    int size;
-    void* data;
-    size_t length;
+	int size;
+	void* data;
+	size_t length;
 } wkeMemBuf;
 
 typedef struct {
-    struct Item {
-        enum wkeStorageType {
-            // String data with an associated MIME type. Depending on the MIME type, there may be
-            // optional metadata attributes as well.
-            StorageTypeString,
-            // Stores the name of one file being dragged into the renderer.
-            StorageTypeFilename,
-            // An image being dragged out of the renderer. Contains a buffer holding the image data
-            // as well as the suggested name for saving the image to.
-            StorageTypeBinaryData,
-            // Stores the filesystem URL of one file being dragged into the renderer.
-            StorageTypeFileSystemFile,
-        } storageType;
+	struct Item {
+		enum wkeStorageType {
+			// String data with an associated MIME type. Depending on the MIME type, there may be
+			// optional metadata attributes as well.
+			StorageTypeString,
+			// Stores the name of one file being dragged into the renderer.
+			StorageTypeFilename,
+			// An image being dragged out of the renderer. Contains a buffer holding the image data
+			// as well as the suggested name for saving the image to.
+			StorageTypeBinaryData,
+			// Stores the filesystem URL of one file being dragged into the renderer.
+			StorageTypeFileSystemFile,
+		} storageType;
 
-        // Only valid when storageType == StorageTypeString.
-        wkeMemBuf* stringType;
-        wkeMemBuf* stringData;
+		// Only valid when storageType == StorageTypeString.
+		wkeMemBuf* stringType;
+		wkeMemBuf* stringData;
 
-        // Only valid when storageType == StorageTypeFilename.
-        wkeMemBuf* filenameData;
-        wkeMemBuf* displayNameData;
+		// Only valid when storageType == StorageTypeFilename.
+		wkeMemBuf* filenameData;
+		wkeMemBuf* displayNameData;
 
-        // Only valid when storageType == StorageTypeBinaryData.
-        wkeMemBuf* binaryData;
+		// Only valid when storageType == StorageTypeBinaryData.
+		wkeMemBuf* binaryData;
 
-        // Title associated with a link when stringType == "text/uri-list".
-        // Filename when storageType == StorageTypeBinaryData.
-        wkeMemBuf* title;
+		// Title associated with a link when stringType == "text/uri-list".
+		// Filename when storageType == StorageTypeBinaryData.
+		wkeMemBuf* title;
 
-        // Only valid when storageType == StorageTypeFileSystemFile.
-        wkeMemBuf* fileSystemURL;
-        __int64 fileSystemFileSize;
+		// Only valid when storageType == StorageTypeFileSystemFile.
+		wkeMemBuf* fileSystemURL;
+		__int64 fileSystemFileSize;
 
-        // Only valid when stringType == "text/html".
-        wkeMemBuf* baseURL;
-    };
+		// Only valid when stringType == "text/html".
+		wkeMemBuf* baseURL;
+	};
 
-    struct Item* m_itemList;
-    int m_itemListLength;
+	struct Item* m_itemList;
+	int m_itemListLength;
 
-    int m_modifierKeyState; // State of Shift/Ctrl/Alt/Meta keys.
-    wkeMemBuf* m_filesystemId;
+	int m_modifierKeyState; // State of Shift/Ctrl/Alt/Meta keys.
+	wkeMemBuf* m_filesystemId;
 } wkeWebDragData;
 
 typedef enum {
-    wkeWebDragOperationNone = 0,
-    wkeWebDragOperationCopy = 1,
-    wkeWebDragOperationLink = 2,
-    wkeWebDragOperationGeneric = 4,
-    wkeWebDragOperationPrivate = 8,
-    wkeWebDragOperationMove = 16,
-    wkeWebDragOperationDelete = 32,
-    wkeWebDragOperationEvery = 0xffffffff
+	wkeWebDragOperationNone = 0,
+	wkeWebDragOperationCopy = 1,
+	wkeWebDragOperationLink = 2,
+	wkeWebDragOperationGeneric = 4,
+	wkeWebDragOperationPrivate = 8,
+	wkeWebDragOperationMove = 16,
+	wkeWebDragOperationDelete = 32,
+	wkeWebDragOperationEvery = 0xffffffff
 } wkeWebDragOperation;
 
 typedef wkeWebDragOperation wkeWebDragOperationsMask;
 
 typedef enum {
-    WKE_RESOURCE_TYPE_MAIN_FRAME = 0,       // top level page
-    WKE_RESOURCE_TYPE_SUB_FRAME = 1,        // frame or iframe
-    WKE_RESOURCE_TYPE_STYLESHEET = 2,       // a CSS stylesheet
-    WKE_RESOURCE_TYPE_SCRIPT = 3,           // an external script
-    WKE_RESOURCE_TYPE_IMAGE = 4,            // an image (jpg/gif/png/etc)
-    WKE_RESOURCE_TYPE_FONT_RESOURCE = 5,    // a font
-    WKE_RESOURCE_TYPE_SUB_RESOURCE = 6,     // an "other" subresource.
-    WKE_RESOURCE_TYPE_OBJECT = 7,           // an object (or embed) tag for a plugin,
-                                            // or a resource that a plugin requested.
-    WKE_RESOURCE_TYPE_MEDIA = 8,            // a media resource.
-    WKE_RESOURCE_TYPE_WORKER = 9,           // the main resource of a dedicated
-                                            // worker.
-    WKE_RESOURCE_TYPE_SHARED_WORKER = 10,   // the main resource of a shared worker.
-    WKE_RESOURCE_TYPE_PREFETCH = 11,        // an explicitly requested prefetch
-    WKE_RESOURCE_TYPE_FAVICON = 12,         // a favicon
-    WKE_RESOURCE_TYPE_XHR = 13,             // a XMLHttpRequest
-    WKE_RESOURCE_TYPE_PING = 14,            // a ping request for <a ping>
-    WKE_RESOURCE_TYPE_SERVICE_WORKER = 15,  // the main resource of a service worker.
-    WKE_RESOURCE_TYPE_LAST_TYPE
+	WKE_RESOURCE_TYPE_MAIN_FRAME = 0,       // top level page
+	WKE_RESOURCE_TYPE_SUB_FRAME = 1,        // frame or iframe
+	WKE_RESOURCE_TYPE_STYLESHEET = 2,       // a CSS stylesheet
+	WKE_RESOURCE_TYPE_SCRIPT = 3,           // an external script
+	WKE_RESOURCE_TYPE_IMAGE = 4,            // an image (jpg/gif/png/etc)
+	WKE_RESOURCE_TYPE_FONT_RESOURCE = 5,    // a font
+	WKE_RESOURCE_TYPE_SUB_RESOURCE = 6,     // an "other" subresource.
+	WKE_RESOURCE_TYPE_OBJECT = 7,           // an object (or embed) tag for a plugin,or a resource that a plugin requested.
+	WKE_RESOURCE_TYPE_MEDIA = 8,            // a media resource.
+	WKE_RESOURCE_TYPE_WORKER = 9,           // the main resource of a dedicated worker.
+	WKE_RESOURCE_TYPE_SHARED_WORKER = 10,   // the main resource of a shared worker.
+	WKE_RESOURCE_TYPE_PREFETCH = 11,        // an explicitly requested prefetch
+	WKE_RESOURCE_TYPE_FAVICON = 12,         // a favicon
+	WKE_RESOURCE_TYPE_XHR = 13,             // a XMLHttpRequest
+	WKE_RESOURCE_TYPE_PING = 14,            // a ping request for <a ping>
+	WKE_RESOURCE_TYPE_SERVICE_WORKER = 15,  // the main resource of a service worker.
+	WKE_RESOURCE_TYPE_LAST_TYPE
 } wkeResourceType;
 
 typedef struct {
-    wkeString url;
-    wkeString newUrl;
-    wkeResourceType resourceType;
-    int httpResponseCode;
-    wkeString method;
-    wkeString referrer;
-    void* headers;
+	wkeString url;
+	wkeString newUrl;
+	wkeResourceType resourceType;
+	int httpResponseCode;
+	wkeString method;
+	wkeString referrer;
+	void* headers;
 } wkeWillSendRequestInfo;
 
 typedef enum {
-    wkeHttBodyElementTypeData,
-    wkeHttBodyElementTypeFile,
+	wkeHttBodyElementTypeData,
+	wkeHttBodyElementTypeFile,
 } wkeHttBodyElementType;
 
 typedef struct {
-    int size;
-    wkeHttBodyElementType type;
-    wkeMemBuf* data;
-    wkeString filePath;
+	int size;
+	wkeHttBodyElementType type;
+	wkeMemBuf* data;
+	wkeString filePath;
 	__int64 fileStart;
 	__int64 fileLength; // -1 means to the end of the file.
 } wkePostBodyElement;
 
 typedef struct {
-    int size;
-    wkePostBodyElement** element;
-    size_t elementSize;
-    bool isDirty;
+	int size;
+	wkePostBodyElement** element;
+	size_t elementSize;
+	bool isDirty;
 } wkePostBodyElements;
 
 typedef struct {
-    int size;
-    wkeWebFrameHandle frame;
-    wkeWillSendRequestInfo* willSendRequestInfo;
-    const char* url;
-    wkePostBodyElements* postBody;
+	int size;
+	wkeWebFrameHandle frame;
+	wkeWillSendRequestInfo* willSendRequestInfo;
+	const char* url;
+	wkePostBodyElements* postBody;
 } wkeTempCallbackInfo;
 
 typedef enum _wkeRequestType {
-    kWkeRequestTypeInvalidation,
-    kWkeRequestTypeGet,
-    kWkeRequestTypePost,
-    kWkeRequestTypePut,
+	kWkeRequestTypeInvalidation,
+	kWkeRequestTypeGet,
+	kWkeRequestTypePost,
+	kWkeRequestTypePut,
 } wkeRequestType;
 
 typedef void(WKE_CALL_TYPE*wkeTitleChangedCallback)(wkeWebView webView, void* param, const wkeString title);
@@ -402,54 +402,54 @@ typedef void(WKE_CALL_TYPE*wkeNodeOnCreateProcessCallback)(wkeWebView webView, v
 typedef void(WKE_CALL_TYPE*wkeOnPluginFindCallback)(wkeWebView webView, void* param, const utf8* mime, void* initializeFunc, void* getEntryPointsFunc, void* shutdownFunc);
 
 typedef struct {
-    int size;
-    int width;
-    int height;
-    double duration;
+	int size;
+	int width;
+	int height;
+	double duration;
 } wkeMediaLoadInfo;
 typedef void(WKE_CALL_TYPE*wkeWillMediaLoadCallback)(wkeWebView webView, void* param, const char* url, wkeMediaLoadInfo* info);
 
 typedef void(WKE_CALL_TYPE*wkeStartDraggingCallback)(
-    wkeWebView webView,
-    void* param, 
-    wkeWebFrameHandle frame,
-    const wkeWebDragData* data,
-    wkeWebDragOperationsMask mask, 
-    const void* image, 
-    const wkePoint* dragImageOffset
-    );
+	wkeWebView webView,
+	void* param,
+	wkeWebFrameHandle frame,
+	const wkeWebDragData* data,
+	wkeWebDragOperationsMask mask,
+	const void* image,
+	const wkePoint* dragImageOffset
+	);
 
 typedef void(WKE_CALL_TYPE*wkeUiThreadRunCallback)(HWND hWnd, void* param);
 typedef int(WKE_CALL_TYPE*wkeUiThreadPostTaskCallback)(HWND hWnd, wkeUiThreadRunCallback callback, void* param);
 
 typedef enum {
-    WKE_DID_START_LOADING,
-    WKE_DID_STOP_LOADING,
-    WKE_DID_NAVIGATE,
-    WKE_DID_NAVIGATE_IN_PAGE,
-    WKE_DID_GET_RESPONSE_DETAILS,
-    WKE_DID_GET_REDIRECT_REQUEST,
-    WKE_DID_POST_REQUEST,
+	WKE_DID_START_LOADING,
+	WKE_DID_STOP_LOADING,
+	WKE_DID_NAVIGATE,
+	WKE_DID_NAVIGATE_IN_PAGE,
+	WKE_DID_GET_RESPONSE_DETAILS,
+	WKE_DID_GET_REDIRECT_REQUEST,
+	WKE_DID_POST_REQUEST,
 } wkeOtherLoadType;
 typedef void(WKE_CALL_TYPE*wkeOnOtherLoadCallback)(wkeWebView webView, void* param, wkeOtherLoadType type, wkeTempCallbackInfo* info);
 
 typedef enum {
-    WKE_LOADING_SUCCEEDED,
-    WKE_LOADING_FAILED,
-    WKE_LOADING_CANCELED
+	WKE_LOADING_SUCCEEDED,
+	WKE_LOADING_FAILED,
+	WKE_LOADING_CANCELED
 } wkeLoadingResult;
 
 typedef void(WKE_CALL_TYPE*wkeLoadingFinishCallback)(wkeWebView webView, void* param, const wkeString url, wkeLoadingResult result, const wkeString failedReason);
 typedef bool(WKE_CALL_TYPE*wkeDownloadCallback)(wkeWebView webView, void* param, const char* url);
 
 typedef enum {
-    wkeLevelDebug = 4,
-    wkeLevelLog = 1,
-    wkeLevelInfo = 5,
-    wkeLevelWarning = 2,
-    wkeLevelError = 3,
-    wkeLevelRevokedError = 6,
-    wkeLevelLast = wkeLevelInfo
+	wkeLevelDebug = 4,
+	wkeLevelLog = 1,
+	wkeLevelInfo = 5,
+	wkeLevelWarning = 2,
+	wkeLevelError = 3,
+	wkeLevelRevokedError = 6,
+	wkeLevelLast = wkeLevelInfo
 } wkeConsoleLevel;
 typedef void(WKE_CALL_TYPE*wkeConsoleCallback)(wkeWebView webView, void* param, wkeConsoleLevel level, const wkeString message, const wkeString sourceName, unsigned sourceLine, const wkeString stackTrace);
 
@@ -472,11 +472,11 @@ typedef void(WKE_CALL_TYPE* wkeOnUrlRequestDidFailCallback)(wkeWebView webView, 
 typedef void(WKE_CALL_TYPE* wkeOnUrlRequestDidFinishLoadingCallback)(wkeWebView webView, void* param, wkeWebUrlRequestPtr request, double finishTime);
 
 typedef struct _wkeUrlRequestCallbacks {
-    wkeOnUrlRequestWillRedirectCallback willRedirectCallback;
-    wkeOnUrlRequestDidReceiveResponseCallback didReceiveResponseCallback;
-    wkeOnUrlRequestDidReceiveDataCallback didReceiveDataCallback;
-    wkeOnUrlRequestDidFailCallback didFailCallback;
-    wkeOnUrlRequestDidFinishLoadingCallback didFinishLoadingCallback;
+	wkeOnUrlRequestWillRedirectCallback willRedirectCallback;
+	wkeOnUrlRequestDidReceiveResponseCallback didReceiveResponseCallback;
+	wkeOnUrlRequestDidReceiveDataCallback didReceiveDataCallback;
+	wkeOnUrlRequestDidFailCallback didFailCallback;
+	wkeOnUrlRequestDidFinishLoadingCallback didFinishLoadingCallback;
 } wkeUrlRequestCallbacks;
 
 typedef bool(WKE_CALL_TYPE*wkeLoadUrlBeginCallback)(wkeWebView webView, void* param, const char* url, wkeNetJob job);
@@ -491,9 +491,9 @@ typedef void* v8Isolate;
 
 //wke window-----------------------------------------------------------------------------------
 typedef enum {
-    WKE_WINDOW_TYPE_POPUP,
-    WKE_WINDOW_TYPE_TRANSPARENT,
-    WKE_WINDOW_TYPE_CONTROL
+	WKE_WINDOW_TYPE_POPUP,
+	WKE_WINDOW_TYPE_TRANSPARENT,
+	WKE_WINDOW_TYPE_CONTROL
 
 } wkeWindowType;
 
@@ -501,8 +501,8 @@ typedef bool(WKE_CALL_TYPE*wkeWindowClosingCallback)(wkeWebView webWindow, void*
 typedef void(WKE_CALL_TYPE*wkeWindowDestroyCallback)(wkeWebView webWindow, void* param);
 
 typedef struct {
-    RECT bounds;
-    bool draggable;
+	RECT bounds;
+	bool draggable;
 } wkeDraggableRegion;
 typedef void(WKE_CALL_TYPE*wkeDraggableRegionsChangedCallback)(wkeWebView webView, void* param, const wkeDraggableRegion* rects, int rectCount);
 
@@ -513,14 +513,14 @@ typedef jsValue(JS_CALL* jsNativeFunction) (jsExecState es);
 typedef jsValue(WKE_CALL_TYPE* wkeJsNativeFunction) (jsExecState es, void* param);
 
 typedef enum {
-    JSTYPE_NUMBER,
-    JSTYPE_STRING,
-    JSTYPE_BOOLEAN,
-    JSTYPE_OBJECT,
-    JSTYPE_FUNCTION,
-    JSTYPE_UNDEFINED,
-    JSTYPE_ARRAY,
-    JSTYPE_NULL,
+	JSTYPE_NUMBER,
+	JSTYPE_STRING,
+	JSTYPE_BOOLEAN,
+	JSTYPE_OBJECT,
+	JSTYPE_FUNCTION,
+	JSTYPE_UNDEFINED,
+	JSTYPE_ARRAY,
+	JSTYPE_NULL,
 } jsType;
 
 // cexer JS对象、函数绑定支持
@@ -531,31 +531,31 @@ struct tagjsData; // declare warning fix
 typedef void(WKE_CALL_TYPE*jsFinalizeCallback)(struct tagjsData* data);
 
 typedef struct tagjsData {
-    char typeName[100];
-    jsGetPropertyCallback propertyGet;
-    jsSetPropertyCallback propertySet;
-    jsFinalizeCallback finalize;
-    jsCallAsFunctionCallback callAsFunction;
+	char typeName[100];
+	jsGetPropertyCallback propertyGet;
+	jsSetPropertyCallback propertySet;
+	jsFinalizeCallback finalize;
+	jsCallAsFunctionCallback callAsFunction;
 } jsData;
 
 typedef struct _jsExceptionInfo {
-    const utf8* message; // Returns the exception message.
-    const utf8* sourceLine; // Returns the line of source code that the exception occurred within.
-    const utf8* scriptResourceName; // Returns the resource name for the script from where the function causing the error originates.
-    int lineNumber; // Returns the 1-based number of the line where the error occurred or 0 if the line number is unknown.
-    int startPosition; // Returns the index within the script of the first character where the error occurred.
-    int endPosition; // Returns the index within the script of the last character where the error occurred.
-    int startColumn; // Returns the index within the line of the first character where the error occurred.
-    int endColumn; // Returns the index within the line of the last character where the error occurred.
-    const utf8* callstackString;
+	const utf8* message; // Returns the exception message.
+	const utf8* sourceLine; // Returns the line of source code that the exception occurred within.
+	const utf8* scriptResourceName; // Returns the resource name for the script from where the function causing the error originates.
+	int lineNumber; // Returns the 1-based number of the line where the error occurred or 0 if the line number is unknown.
+	int startPosition; // Returns the index within the script of the first character where the error occurred.
+	int endPosition; // Returns the index within the script of the last character where the error occurred.
+	int startColumn; // Returns the index within the line of the first character where the error occurred.
+	int endColumn; // Returns the index within the line of the last character where the error occurred.
+	const utf8* callstackString;
 } jsExceptionInfo;
 
 typedef struct _jsKeys {
-    unsigned int length;
-    const char** keys;
+	unsigned int length;
+	const char** keys;
 
 #if defined(__cplusplus)
-    ~_jsKeys();
+	~_jsKeys();
 #endif
 } jsKeys;
 
@@ -563,99 +563,99 @@ typedef struct _jsKeys {
 #if defined(__cplusplus)
 namespace wke {
 
-class IWebView {
-public:
-    virtual void destroy() = 0;
+	class IWebView {
+	public:
+		virtual void destroy() = 0;
 
-    virtual const char* name() const = 0;
-    virtual void setName(const char* name) = 0;
+		virtual const char* name() const = 0;
+		virtual void setName(const char* name) = 0;
 
-    virtual bool isTransparent() const = 0;
-    virtual void setTransparent(bool transparent) = 0;
+		virtual bool isTransparent() const = 0;
+		virtual void setTransparent(bool transparent) = 0;
 
-    virtual void loadURL(const utf8* url) = 0;
-    virtual void loadURL(const wchar_t* url) = 0;
+		virtual void loadURL(const utf8* url) = 0;
+		virtual void loadURL(const wchar_t* url) = 0;
 
-    virtual void loadHTML(const utf8* html) = 0;
-    virtual void loadHTML(const wchar_t* html) = 0;
+		virtual void loadHTML(const utf8* html) = 0;
+		virtual void loadHTML(const wchar_t* html) = 0;
 
-    virtual void loadFile(const utf8* filename) = 0;
-    virtual void loadFile(const wchar_t* filename) = 0;
+		virtual void loadFile(const utf8* filename) = 0;
+		virtual void loadFile(const wchar_t* filename) = 0;
 
-    virtual const utf8* url() const = 0;
+		virtual const utf8* url() const = 0;
 
-    virtual bool isLoading() const = 0;        /*document load sucessed*/
-    virtual bool isLoadingFailed() const = 0;    /*document load failed*/
-    virtual bool isLoadingSucceeded() const = 0;  /*document load complete*/
-    virtual bool isDocumentReady() const = 0; /*document ready*/
-    virtual void stopLoading() = 0;
-    virtual void reload() = 0;
+		virtual bool isLoading() const = 0;        /*document load sucessed*/
+		virtual bool isLoadingFailed() const = 0;    /*document load failed*/
+		virtual bool isLoadingSucceeded() const = 0;  /*document load complete*/
+		virtual bool isDocumentReady() const = 0; /*document ready*/
+		virtual void stopLoading() = 0;
+		virtual void reload() = 0;
 
-    virtual const utf8* title() = 0;
-    virtual const wchar_t* titleW() = 0;
+		virtual const utf8* title() = 0;
+		virtual const wchar_t* titleW() = 0;
 
-    virtual void resize(int w, int h) = 0;
-    virtual int width() const = 0;   /*viewport width*/
-    virtual int height() const = 0;  /*viewport height*/
+		virtual void resize(int w, int h) = 0;
+		virtual int width() const = 0;   /*viewport width*/
+		virtual int height() const = 0;  /*viewport height*/
 
-    virtual int contentsWidth() const = 0;  /*contents width*/
-    virtual int contentsHeight() const = 0; /*contents height*/
+		virtual int contentsWidth() const = 0;  /*contents width*/
+		virtual int contentsHeight() const = 0; /*contents height*/
 
-    virtual void setDirty(bool dirty) = 0;
-    virtual bool isDirty() const = 0;
-    virtual void addDirtyArea(int x, int y, int w, int h) = 0;
+		virtual void setDirty(bool dirty) = 0;
+		virtual bool isDirty() const = 0;
+		virtual void addDirtyArea(int x, int y, int w, int h) = 0;
 
-    virtual void layoutIfNeeded() = 0;
-    virtual void paint(void* bits, int pitch) = 0;
+		virtual void layoutIfNeeded() = 0;
+		virtual void paint(void* bits, int pitch) = 0;
 
-    virtual bool canGoBack() const = 0;
-    virtual bool goBack() = 0;
-    virtual bool canGoForward() const = 0;
-    virtual bool goForward() = 0;
+		virtual bool canGoBack() const = 0;
+		virtual bool goBack() = 0;
+		virtual bool canGoForward() const = 0;
+		virtual bool goForward() = 0;
 
-    virtual void editorSelectAll() = 0;
-    virtual void editorUnSelect() = 0;
-    virtual void editorCopy() = 0;
-    virtual void editorCut() = 0;
-    virtual void editorPaste() = 0;
-    virtual void editorDelete() = 0;
-    virtual void editorUndo() = 0;
-    virtual void editorRedo() = 0;
+		virtual void editorSelectAll() = 0;
+		virtual void editorUnSelect() = 0;
+		virtual void editorCopy() = 0;
+		virtual void editorCut() = 0;
+		virtual void editorPaste() = 0;
+		virtual void editorDelete() = 0;
+		virtual void editorUndo() = 0;
+		virtual void editorRedo() = 0;
 
-    virtual void setCookieEnabled(bool enable) = 0;
-    virtual bool isCookieEnabled() const = 0;
+		virtual void setCookieEnabled(bool enable) = 0;
+		virtual bool isCookieEnabled() const = 0;
 
-    virtual void setMediaVolume(float volume) = 0;
-    virtual float mediaVolume() const = 0;
+		virtual void setMediaVolume(float volume) = 0;
+		virtual float mediaVolume() const = 0;
 
-    virtual bool fireMouseEvent(unsigned int message, int x, int y, unsigned int flags) = 0;
-    virtual bool fireContextMenuEvent(int x, int y, unsigned int flags) = 0;
-    virtual bool fireMouseWheelEvent(int x, int y, int delta, unsigned int flags) = 0;
-    virtual bool fireKeyUpEvent(unsigned int virtualKeyCode, unsigned int flags, bool systemKey) = 0;
-    virtual bool fireKeyDownEvent(unsigned int virtualKeyCode, unsigned int flags, bool systemKey) = 0;
-    virtual bool fireKeyPressEvent(unsigned int virtualKeyCode, unsigned int flags, bool systemKey) = 0;
+		virtual bool fireMouseEvent(unsigned int message, int x, int y, unsigned int flags) = 0;
+		virtual bool fireContextMenuEvent(int x, int y, unsigned int flags) = 0;
+		virtual bool fireMouseWheelEvent(int x, int y, int delta, unsigned int flags) = 0;
+		virtual bool fireKeyUpEvent(unsigned int virtualKeyCode, unsigned int flags, bool systemKey) = 0;
+		virtual bool fireKeyDownEvent(unsigned int virtualKeyCode, unsigned int flags, bool systemKey) = 0;
+		virtual bool fireKeyPressEvent(unsigned int virtualKeyCode, unsigned int flags, bool systemKey) = 0;
 
-    virtual void setFocus() = 0;
-    virtual void killFocus() = 0;
+		virtual void setFocus() = 0;
+		virtual void killFocus() = 0;
 
-    virtual wkeRect getCaret() = 0;
+		virtual wkeRect getCaret() = 0;
 
-    virtual jsValue runJS(const utf8* script, bool isInClosure) = 0;
-    virtual jsValue runJS(const wchar_t* script, bool isInClosure) = 0;
-    virtual jsExecState globalExec() = 0;
+		virtual jsValue runJS(const utf8* script, bool isInClosure) = 0;
+		virtual jsValue runJS(const wchar_t* script, bool isInClosure) = 0;
+		virtual jsExecState globalExec() = 0;
 
-    virtual void sleep() = 0; //moveOffscreen
-    virtual void wake() = 0; //moveOnscreen
-    virtual bool isAwake() const = 0;
+		virtual void sleep() = 0; //moveOffscreen
+		virtual void wake() = 0; //moveOnscreen
+		virtual bool isAwake() const = 0;
 
-    virtual void setZoomFactor(float factor) = 0;
-    virtual float zoomFactor() const = 0;
+		virtual void setZoomFactor(float factor) = 0;
+		virtual float zoomFactor() const = 0;
 
-    virtual void setEditable(bool editable) = 0;
+		virtual void setEditable(bool editable) = 0;
 
-    virtual void setClientHandler(const wkeClientHandler* handler) = 0;
-    virtual const wkeClientHandler* getClientHandler() const = 0;
-};
+		virtual void setClientHandler(const wkeClientHandler* handler) = 0;
+		virtual const wkeClientHandler* getClientHandler() const = 0;
+	};
 
 }
 #endif
@@ -1147,25 +1147,25 @@ WKE_EXTERN_C __declspec(dllexport) void wkeInitialize();
 WKE_EXTERN_C __declspec(dllexport) void wkeInitializeEx(const wkeSettings* settings);
 
 WKE_FOR_EACH_DEFINE_FUNCTION(WKE_DECLARE_ITERATOR0, WKE_DECLARE_ITERATOR1, WKE_DECLARE_ITERATOR2, \
-    WKE_DECLARE_ITERATOR3, WKE_DECLARE_ITERATOR4, WKE_DECLARE_ITERATOR5, WKE_DECLARE_ITERATOR6, WKE_DECLARE_ITERATOR11, WKE_DECLARE_ITERATOR9)
+	WKE_DECLARE_ITERATOR3, WKE_DECLARE_ITERATOR4, WKE_DECLARE_ITERATOR5, WKE_DECLARE_ITERATOR6, WKE_DECLARE_ITERATOR11, WKE_DECLARE_ITERATOR9)
 
 #else
 
 WKE_FOR_EACH_DEFINE_FUNCTION(WKE_DEFINE_ITERATOR0, WKE_DEFINE_ITERATOR1, WKE_DEFINE_ITERATOR2, \
-    WKE_DEFINE_ITERATOR3, WKE_DEFINE_ITERATOR4, WKE_DEFINE_ITERATOR5, WKE_DEFINE_ITERATOR6, WKE_DEFINE_ITERATOR11)
+	WKE_DEFINE_ITERATOR3, WKE_DEFINE_ITERATOR4, WKE_DEFINE_ITERATOR5, WKE_DEFINE_ITERATOR6, WKE_DEFINE_ITERATOR11)
 
-typedef void (WKE_CALL_TYPE *FN_wkeInitializeEx)(const wkeSettings* settings);
+	typedef void (WKE_CALL_TYPE *FN_wkeInitializeEx)(const wkeSettings* settings);
 
 __declspec(selectany) const wchar_t* kWkeDllPath = L"node.dll";
 
 inline void wkeSetWkeDllPath(const wchar_t* dllPath)
 {
-    kWkeDllPath = dllPath;
+	kWkeDllPath = dllPath;
 }
 
 inline int wkeInitializeEx(const wkeSettings* settings)
 {
-    HMODULE hMod = LoadLibraryW(kWkeDllPath);
+	HMODULE hMod = LoadLibraryW(kWkeDllPath);
 
 	if (hMod) {
 		FN_wkeInitializeEx wkeInitializeExFunc = (FN_wkeInitializeEx)GetProcAddress(hMod, "wkeInitializeEx");
@@ -1173,15 +1173,15 @@ inline int wkeInitializeEx(const wkeSettings* settings)
 
 		WKE_FOR_EACH_DEFINE_FUNCTION(WKE_GET_PTR_ITERATOR0, WKE_GET_PTR_ITERATOR1, WKE_GET_PTR_ITERATOR2, WKE_GET_PTR_ITERATOR3, \
 			WKE_GET_PTR_ITERATOR4, WKE_GET_PTR_ITERATOR5, WKE_GET_PTR_ITERATOR6, WKE_GET_PTR_ITERATOR11);
-		
+
 		return 1;
 	}
-    return 0;
+	return 0;
 }
 
 inline void wkeInitialize()
 {
-    return wkeInitializeEx(((const wkeSettings*)0));
+	return wkeInitializeEx(((const wkeSettings*)0));
 }
 
 #endif

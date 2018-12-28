@@ -269,24 +269,8 @@ void wkeSetLanguage(wkeWebView webview, const char* language)
     webview->webPage()->webViewImpl()->page()->settings().setLanguage(String(language));
 }
 
-void wkeUpdate()
-{
-//     static HWND hTimer = NULL;
-//     if (!hTimer)
-//         hTimer = FindWindow(L"TimerWindowClass", NULL);
-// 
-//     if (hTimer) {
-//         MSG msg;
-//         while(PeekMessage(&msg, hTimer, 0, 0, PM_REMOVE))
-//         {
-//             TranslateMessage(&msg);
-//             DispatchMessage(&msg);
-//         }
-//     }
-}
-
 #define MAJOR_VERSION   (1)
-#define MINOR_VERSION   (2)
+#define MINOR_VERSION   (3)
 #define WEBKIT_BUILD    (98096)
 
 unsigned int wkeGetVersion()
@@ -1044,7 +1028,7 @@ void wkeOnDownload(wkeWebView webView, wkeDownloadCallback callback, void* param
     webView->onDownload(callback, param);
 }
 
-void wkeNetOnResponse(wkeWebView webView, wkeNetResponseCallback callback, void* param)
+void wkeOnResponse(wkeWebView webView, wkeResponseCallback callback, void* param)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->onNetResponse(callback, param);
@@ -1885,16 +1869,6 @@ bool wkeKeyDown(wkeWebView webView, unsigned int virtualKeyCode, unsigned int fl
 bool wkeKeyPress(wkeWebView webView, unsigned int charCode, unsigned int flags, bool systemKey)
 {
     return wkeFireKeyPressEvent(webView, charCode, flags, systemKey);
-}
-
-void wkeFocus(wkeWebView webView)
-{
-    wkeSetFocus(webView);
-}
-
-void wkeUnfocus(wkeWebView webView)
-{
-    wkeKillFocus(webView);
 }
 
 wkeRect wkeGetCaret(wkeWebView webView)

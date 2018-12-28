@@ -1215,7 +1215,7 @@ void CWebView::onDownload(wkeDownloadCallback callback, void* callbackParam)
     m_webPage->wkeHandler().downloadCallbackParam = callbackParam;
 }
 
-void CWebView::onNetResponse(wkeNetResponseCallback callback, void* callbackParam)
+void CWebView::onNetResponse(wkeResponseCallback callback, void* callbackParam)
 {
     m_webPage->wkeHandler().netResponseCallback = callback;
     m_webPage->wkeHandler().netResponseCallbackParam = callbackParam;

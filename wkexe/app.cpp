@@ -210,8 +210,21 @@ void NetHookRequest(wkeWebView webView, void* param, const char *url, void *job,
 	::WideCharToMultiByte(CP_UTF8, 0, str1, -1, &utf82[0], slen, NULL, NULL);
 
 	const char *b = strstr(static_cast<const char*>(buf), &utf81[0]);
-	memcpy((void *)b, &utf82, slen);
+	if (NULL != b)
+		memcpy((void *)b, &utf82, slen);
+
 	return ;
+}
+
+bool HandleNetResponse(wkeWebView webView, void* param, const char* url, wkeNetJob job)
+{
+
+	return false;
+}
+
+void HandleNetGetFavicon(wkeWebView webView, void* param, const utf8* url, wkeMemBuf* buf)
+{
+	printf(url);
 }
 
 // 创建主页面窗口
@@ -232,6 +245,8 @@ BOOL CreateWebWindow(Application* app)
     wkeOnCreateView(app->window, HandleCreateView, app);
 	wkeOnLoadUrlBegin(app->window, HandleLoadUrlBegin, app);
 	wkeOnNetHookRequest(app->window, NetHookRequest, app);
+	wkeOnResponse(app->window, HandleNetResponse, app);
+	wkeNetGetFavicon(app->window, HandleNetGetFavicon, app);
 
     wkeMoveToCenter(app->window);
 	wkeShowWindow(app->window, true);

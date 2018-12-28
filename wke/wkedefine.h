@@ -483,7 +483,7 @@ typedef bool(WKE_CALL_TYPE*wkeLoadUrlBeginCallback)(wkeWebView webView, void* pa
 typedef void(WKE_CALL_TYPE*wkeNetHookRequestCallback)(wkeWebView webView, void* param, const char* url, wkeNetJob job, void* buf, int len);
 typedef void(WKE_CALL_TYPE*wkeDidCreateScriptContextCallback)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, void* context, int extensionGroup, int worldId);
 typedef void(WKE_CALL_TYPE*wkeWillReleaseScriptContextCallback)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, void* context, int worldId);
-typedef bool(WKE_CALL_TYPE*wkeNetResponseCallback)(wkeWebView webView, void* param, const char* url, wkeNetJob job);
+typedef bool(WKE_CALL_TYPE*wkeResponseCallback)(wkeWebView webView, void* param, const char* url, wkeNetJob job);
 typedef void(WKE_CALL_TYPE*wkeOnNetGetFaviconCallback)(wkeWebView webView, void* param, const utf8* url, wkeMemBuf* buf);
 
 typedef void* v8ContextPtr;
@@ -796,9 +796,6 @@ public:
     ITERATOR4(bool, wkeKeyDown, wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey, "") \
     ITERATOR4(bool, wkeKeyPress, wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey, "") \
     \
-    ITERATOR1(void, wkeFocus, wkeWebView webView, "") \
-    ITERATOR1(void, wkeUnfocus, wkeWebView webView, "") \
-    \
     ITERATOR1(wkeRect, wkeGetCaret, wkeWebView webView, "") \
     \
     ITERATOR1(void, wkeAwaken, wkeWebView webView, "") \
@@ -821,7 +818,6 @@ public:
     ITERATOR3(void, wkeSetDebugConfig, wkeWebView webView, const char* debugString, const char* param, "") \
     \
     ITERATOR0(void, wkeFinalize, "") \
-    ITERATOR0(void, wkeUpdate, "") \
     ITERATOR0(unsigned int, wkeGetVersion, "") \
     ITERATOR0(const utf8*, wkeGetVersionString, "") \
     \
@@ -1016,6 +1012,7 @@ public:
     ITERATOR3(void, wkeOnDraggableRegionsChanged, wkeWebView webView, wkeDraggableRegionsChangedCallback callback, void* param, "") \
     ITERATOR3(void, wkeOnWillMediaLoad, wkeWebView webView, wkeWillMediaLoadCallback callback, void* param, "") \
     ITERATOR3(void, wkeOnStartDragging, wkeWebView webView, wkeStartDraggingCallback callback, void* param, "") \
+	ITERATOR3(void, wkeOnResponse, wkeWebView webView, wkeResponseCallback callback, void* param, "") \
     \
     ITERATOR3(void, wkeOnOtherLoad, wkeWebView webView, wkeOnOtherLoadCallback callback, void* param, "") \
     \
@@ -1030,7 +1027,6 @@ public:
         "此函数和wkeNetSetData的区别是，wkeNetHookRequest会在接受到真正网络数据后再调用回调，并允许回调修改网络数据。"\
         "而wkeNetSetData是在网络数据还没发送的时候修改") \
     ITERATOR1(void, wkeNetHookRequest, wkeNetJob jobPtr, "") \
-    ITERATOR3(void, wkeNetOnResponse, wkeWebView webView, wkeNetResponseCallback callback, void* param, "") \
     ITERATOR1(wkeRequestType, wkeNetGetRequestMethod, wkeNetJob jobPtr, "") \
     ITERATOR3(int, wkeNetGetFavicon, wkeWebView webView, wkeOnNetGetFaviconCallback callback, void* param, "") \
     \

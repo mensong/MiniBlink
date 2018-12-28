@@ -575,8 +575,8 @@ WKE_API void wkeNetSetData(void* job, void *buf, int len);
 // 而wkeNetSetData是在网络数据还没发送的时候修改
 WKE_API void wkeNetHookRequest(void *job);
 
-typedef bool(*wkeNetResponseCallback)(wkeWebView webView, void* param, const char* url, void* job);
-WKE_API void wkeNetOnResponse(wkeWebView webView, wkeNetResponseCallback callback, void* param);
+typedef bool(*wkeResponseCallback)(wkeWebView webView, void* param, const char* url, void* job);
+WKE_API void wkeOnResponse(wkeWebView webView, wkeResponseCallback callback, void* param);
 
 WKE_API void wkeNetGetMIMEType(void* job, wkeString mime);
 

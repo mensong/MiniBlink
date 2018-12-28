@@ -22,29 +22,41 @@
 #include "net/HeaderVisitor.h"
 #include "wkeWebView.h"
 
-void wkeNetSetHTTPHeaderField(wkeNetJob jobPtr, wchar_t* key, wchar_t* value, bool response)
+template<typename TC>
+void wkeNetSetHTTPHeaderField(wkeNetJob jobPtr, const TC* key, const TC* value, bool response)
 {
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    net::WebURLLoaderInternal* job = (net::WebURLLoaderInternal*)jobPtr;
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	net::WebURLLoaderInternal* job = (net::WebURLLoaderInternal*)jobPtr;
 
-    if (response) {
-        job->m_response.setHTTPHeaderField(String(key), String(value));
-    } else {
-        String keyString(key);
-        if (equalIgnoringCase(keyString, "referer"))
-            job->firstRequest()->setHTTPReferrer(String(value), WebReferrerPolicyDefault);
-        else
-            job->firstRequest()->setHTTPHeaderField(keyString, String(value));
+	if (response) {
+		job->m_response.setHTTPHeaderField(String(key), String(value));
+	}
+	else {
+		String keyString(key);
+		if (equalIgnoringCase(keyString, "referer"))
+			job->firstRequest()->setHTTPReferrer(String(value), WebReferrerPolicyDefault);
+		else
+			job->firstRequest()->setHTTPHeaderField(keyString, String(value));
 
-        if (job->m_initializeHandleInfo) { // setHttpResponseDataToJobWhenDidReceiveResponseOnMainThread里m_initializeHandleInfo为空
-            curl_slist* headers = job->m_initializeHandleInfo->headers;
-            curl_slist_free_all(headers);
-            headers = nullptr;
-            net::HeaderVisitor visitor(&headers);
-            job->firstRequest()->visitHTTPHeaderFields(&visitor);
-            job->m_initializeHandleInfo->headers = headers;
-        }
-    }
+		if (job->m_initializeHandleInfo) { // setHttpResponseDataToJobWhenDidReceiveResponseOnMainThread里m_initializeHandleInfo为空
+			curl_slist* headers = job->m_initializeHandleInfo->headers;
+			curl_slist_free_all(headers);
+			headers = nullptr;
+			net::HeaderVisitor visitor(&headers);
+			job->firstRequest()->visitHTTPHeaderFields(&visitor);
+			job->m_initializeHandleInfo->headers = headers;
+		}
+	}
+}
+
+void wkeNetSetHTTPHeaderFieldW(wkeNetJob jobPtr, const wchar_t* key, const wchar_t* value, bool response)
+{
+	wkeNetSetHTTPHeaderField<wchar_t>(jobPtr, key, value, response);
+}
+
+void wkeNetSetHTTPHeaderField(wkeNetJob jobPtr, const char* key, const char* value, bool response)
+{
+	wkeNetSetHTTPHeaderField<char>(jobPtr, key, value, response);
 }
 
 const char* wkeNetGetHTTPHeaderField(wkeNetJob jobPtr, const char* key)

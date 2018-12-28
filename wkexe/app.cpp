@@ -153,7 +153,7 @@ void HandleWindowDestroy(wkeWebView webWindow, void* param)
 // 回调：文档加载成功
 void HandleDocumentReady(wkeWebView webWindow, void* param)
 {
-    wkeShowWindow(webWindow, TRUE);
+	
 }
 
 // 回调：页面标题改变
@@ -188,6 +188,9 @@ bool HandleLoadUrlBegin(wkeWebView webView, void* param, const char *url, void *
 	else if (strcmp(url, "https://www.google.com/") == 0) {
 		return true;
 	}
+
+	wkeNetSetHTTPHeaderField(job, "Gergul", "Gergul123", false);
+	
 	return false;
 }
 
@@ -231,10 +234,13 @@ BOOL CreateWebWindow(Application* app)
 	wkeOnNetHookRequest(app->window, NetHookRequest, app);
 
     wkeMoveToCenter(app->window);
+	wkeShowWindow(app->window, true);
     wkeLoadURLW(app->window, app->url);
 
 	if (app->options.transparent)
 		wkeCreateResizeBorders(app->window, true, true, true, true, true, true, true, true);
+
+	//wkeSetMouseEnabled(app->window, false);
 
     return TRUE;
 }

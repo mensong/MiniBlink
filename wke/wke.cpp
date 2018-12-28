@@ -1699,29 +1699,6 @@ const utf8* wkeGetDocumentCompleteURL(wkeWebView webView, wkeWebFrameHandle fram
     return wke::createTempCharString((const char*)result.characters8(), result.length());
 }
 
-//////////////////////////////////////////////////////////////////////////
-// V1 API
-
-void wkeInit()
-{
-    wkeInitialize();
-}
-
-void wkeShutdown()
-{
-    wkeFinalize();
-}
-
-unsigned int wkeVersion()
-{
-    return wkeGetVersion();
-}
-
-const utf8* wkeVersionString()
-{
-    return wkeGetVersionString();
-}
-
 void wkeGC(wkeWebView webView, long intervalSec)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
@@ -1752,140 +1729,6 @@ void wkeSetFileSystem(WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose, WKE_FILE_S
     curl_set_file_system(pfnOpen, pfnClose, pfnSize, pfnRead, pfnSeek, nullptr);
 }
 
-const char* wkeWebViewName(wkeWebView webView)
-{
-    return wkeGetName(webView);
-}
-
-void wkeSetWebViewName(wkeWebView webView, const char* name)
-{
-    wkeSetName(webView, name);
-}
-
-bool wkeIsLoadFailed(wkeWebView webView)
-{
-    return wkeIsLoadingFailed(webView);
-}
-
-bool wkeIsLoadComplete(wkeWebView webView)
-{
-    return wkeIsLoadingCompleted(webView);
-}
-
-const utf8* wkeGetSource(wkeWebView webView)
-{
-    return nullptr;
-}
-
-const utf8* wkeTitle(wkeWebView webView)
-{
-    return wkeGetTitle(webView);
-}
-
-const wchar_t* wkeTitleW(wkeWebView webView)
-{
-    return wkeGetTitleW(webView);
-}
-
-int wkeWidth(wkeWebView webView)
-{
-    return wkeGetWidth(webView);
-}
-
-int wkeHeight(wkeWebView webView)
-{
-    return wkeGetHeight(webView);
-}
-
-int wkeContentsWidth(wkeWebView webView)
-{
-    return wkeGetContentWidth(webView);
-}
-
-int wkeContentsHeight(wkeWebView webView)
-{
-    return wkeGetContentHeight(webView);
-}
-
-void wkeSelectAll(wkeWebView webView)
-{
-    wkeEditorSelectAll(webView);
-}
-
-void wkeCopy(wkeWebView webView)
-{
-    wkeEditorCopy(webView);
-}
-
-void wkeCut(wkeWebView webView)
-{
-    wkeEditorCut(webView);
-}
-
-void wkePaste(wkeWebView webView)
-{
-    wkeEditorPaste(webView);
-}
-
-void wkeDelete(wkeWebView webView)
-{
-    wkeEditorDelete(webView);
-}
-
-bool wkeCookieEnabled(wkeWebView webView)
-{
-    return wkeIsCookieEnabled(webView);
-}
-
-float wkeMediaVolume(wkeWebView webView)
-{
-    return wkeGetMediaVolume(webView);
-}
-
-bool wkeMouseEvent(wkeWebView webView, unsigned int message, int x, int y, unsigned int flags)
-{
-    return wkeFireMouseEvent(webView, message, x, y, flags);
-}
-
-bool wkeContextMenuEvent(wkeWebView webView, int x, int y, unsigned int flags)
-{
-    return wkeFireContextMenuEvent(webView, x, y, flags);
-}
-bool wkeMouseWheel(wkeWebView webView, int x, int y, int delta, unsigned int flags)
-{
-    return wkeFireMouseWheelEvent(webView, x, y, delta, flags);
-}
-
-bool wkeKeyUp(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)
-{
-    return wkeFireKeyUpEvent(webView, virtualKeyCode, flags, systemKey);
-}
-
-bool wkeKeyDown(wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey)
-{
-    return wkeFireKeyDownEvent(webView, virtualKeyCode, flags, systemKey);
-}
-
-bool wkeKeyPress(wkeWebView webView, unsigned int charCode, unsigned int flags, bool systemKey)
-{
-    return wkeFireKeyPressEvent(webView, charCode, flags, systemKey);
-}
-
-wkeRect wkeGetCaret(wkeWebView webView)
-{
-    return wkeGetCaretRect(webView);
-}
-
-void wkeAwaken(wkeWebView webView)
-{
-    return wkeWake(webView);
-}
-
-float wkeZoomFactor(wkeWebView webView)
-{
-    return wkeGetZoomFactor(webView);
-}
-
 void wkeTitleChangedCallbackWrap(wkeWebView webView, void* param, const wkeString title)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
@@ -1911,16 +1754,6 @@ void wkeSetClientHandler(wkeWebView webView, const wkeClientHandler* handler)
 const wkeClientHandler* wkeGetClientHandler(wkeWebView webView)
 {
     return (const wkeClientHandler*)webView->getClientHandler();
-}
-
-const utf8* wkeToString(const wkeString string)
-{
-    return wkeGetString(string);
-}
-
-const wchar_t* wkeToStringW(const wkeString string)
-{
-    return wkeGetStringW(string);
 }
 
 // V1 API end

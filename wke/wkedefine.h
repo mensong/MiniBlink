@@ -757,69 +757,25 @@ public:
 // 以下是wke的导出函数。格式按照【返回类型】【函数名】【参数】来排列
 
 #define WKE_FOR_EACH_DEFINE_FUNCTION(ITERATOR0, ITERATOR1, ITERATOR2, ITERATOR3, ITERATOR4, ITERATOR5, ITERATOR6, ITERATOR11, ITERATOR9) \
-    ITERATOR0(void, wkeShutdown, "") \
+    ITERATOR0(void, wkeFinalize, "") \
+	ITERATOR0(bool, wkeIsInitialize, "") \
+    ITERATOR0(unsigned int, wkeGetVersion, "") \
+    ITERATOR0(const utf8*, wkeGetVersionString, "") \
     \
-    ITERATOR0(unsigned int, wkeVersion, "") \
-    ITERATOR0(const utf8*, wkeVersionString, "") \
-    ITERATOR2(void, wkeGC, wkeWebView webView, long intervalSec, "") \
+	ITERATOR2(void, wkeGC, wkeWebView webView, long intervalSec, "") \
     ITERATOR2(void, wkeSetResourceGc, wkeWebView webView, long intervalSec, "") \
     \
     ITERATOR5(void, wkeSetFileSystem, WKE_FILE_OPEN pfnOpen, WKE_FILE_CLOSE pfnClose, WKE_FILE_SIZE pfnSize, WKE_FILE_READ pfnRead, WKE_FILE_SEEK pfnSeek, "") \
     \
-    ITERATOR1(const char*, wkeWebViewName, wkeWebView webView, "") \
-    ITERATOR2(void, wkeSetWebViewName, wkeWebView webView, const char* name, "") \
-    \
-    ITERATOR1(bool, wkeIsLoadFailed, wkeWebView webView, "") \
-    ITERATOR1(bool, wkeIsLoadComplete, wkeWebView webView, "") \
-    \
-    ITERATOR1(const utf8*, wkeGetSource, wkeWebView webView, "") \
-    ITERATOR1(const utf8*, wkeTitle, wkeWebView webView, "") \
-    ITERATOR1(const wchar_t*, wkeTitleW, wkeWebView webView, "") \
-    ITERATOR1(int, wkeWidth, wkeWebView webView, "") \
-    ITERATOR1(int, wkeHeight, wkeWebView webView, "") \
-    ITERATOR1(int, wkeContentsWidth, wkeWebView webView, "") \
-    ITERATOR1(int, wkeContentsHeight, wkeWebView webView, "") \
-    \
-    ITERATOR1(void, wkeSelectAll, wkeWebView webView, "") \
-    ITERATOR1(void, wkeCopy, wkeWebView webView, "") \
-    ITERATOR1(void, wkeCut, wkeWebView webView, "") \
-    ITERATOR1(void, wkePaste, wkeWebView webView, "") \
-    ITERATOR1(void, wkeDelete, wkeWebView webView, "") \
-    \
-    ITERATOR1(bool, wkeCookieEnabled, wkeWebView webView, "") \
-    ITERATOR1(float, wkeMediaVolume, wkeWebView webView, "") \
-    \
-    ITERATOR5(bool, wkeMouseEvent, wkeWebView webView, unsigned int message, int x, int y, unsigned int flags, "") \
-    ITERATOR4(bool, wkeContextMenuEvent, wkeWebView webView, int x, int y, unsigned int flags, "") \
-    ITERATOR5(bool, wkeMouseWheel, wkeWebView webView, int x, int y, int delta, unsigned int flags, "") \
-    ITERATOR4(bool, wkeKeyUp, wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey, "") \
-    ITERATOR4(bool, wkeKeyDown, wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey, "") \
-    ITERATOR4(bool, wkeKeyPress, wkeWebView webView, unsigned int virtualKeyCode, unsigned int flags, bool systemKey, "") \
-    \
     ITERATOR1(wkeRect, wkeGetCaret, wkeWebView webView, "") \
-    \
-    ITERATOR1(void, wkeAwaken, wkeWebView webView, "") \
-    \
-    ITERATOR1(float, wkeZoomFactor, wkeWebView webView, "") \
     \
     ITERATOR2(void, wkeSetClientHandler, wkeWebView webView, const wkeClientHandler* handler, "") \
     ITERATOR1(const wkeClientHandler*, wkeGetClientHandler, wkeWebView webView, "") \
     \
-    ITERATOR1(const utf8*, wkeToString, const wkeString string, "") \
-    ITERATOR1(const wchar_t*, wkeToStringW, const wkeString string, "") \
-    \
-    ITERATOR2(const utf8*, jsToString, jsExecState es, jsValue v, "") \
-    ITERATOR2(const wchar_t*, jsToStringW, jsExecState es, jsValue v, "") \
-    \
     ITERATOR1(void, wkeConfigure, const wkeSettings* settings, "") \
-    ITERATOR0(bool, wkeIsInitialize, "") \
     \
     ITERATOR2(void, wkeSetViewSettings, wkeWebView webView, const wkeViewSettings* settings, "") \
     ITERATOR3(void, wkeSetDebugConfig, wkeWebView webView, const char* debugString, const char* param, "") \
-    \
-    ITERATOR0(void, wkeFinalize, "") \
-    ITERATOR0(unsigned int, wkeGetVersion, "") \
-    ITERATOR0(const utf8*, wkeGetVersionString, "") \
     \
     ITERATOR0(wkeWebView, wkeCreateWebView, "") \
     ITERATOR1(void, wkeDestroyWebView, wkeWebView webView, "") \
@@ -1129,6 +1085,8 @@ public:
     ITERATOR2(wkeMemBuf*, jsGetArrayBuffer, jsExecState es, jsValue value, "") \
     ITERATOR2(const utf8*, jsToTempString, jsExecState es, jsValue v, "") \
     ITERATOR2(const wchar_t*, jsToTempStringW, jsExecState es, jsValue v, "") \
+	ITERATOR2(const utf8*, jsToString, jsExecState es, jsValue v, "") \
+    ITERATOR2(const wchar_t*, jsToStringW, jsExecState es, jsValue v, "") \
     ITERATOR2(void*, jsToV8Value, jsExecState es, jsValue v, "return v8::Persistent<v8::Value>*") \
     \
     ITERATOR1(jsValue, jsInt, int n, "") \
@@ -1185,7 +1143,6 @@ public:
 
 #if ENABLE_WKE == 1
 
-WKE_EXTERN_C __declspec(dllexport) void wkeInit();
 WKE_EXTERN_C __declspec(dllexport) void wkeInitialize();
 WKE_EXTERN_C __declspec(dllexport) void wkeInitializeEx(const wkeSettings* settings);
 
@@ -1220,11 +1177,6 @@ inline int wkeInitializeEx(const wkeSettings* settings)
 		return 1;
 	}
     return 0;
-}
-
-inline int wkeInit()
-{
-	return wkeInitializeEx(((const wkeSettings*)0));
 }
 
 inline void wkeInitialize()

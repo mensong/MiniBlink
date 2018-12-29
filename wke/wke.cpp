@@ -981,12 +981,6 @@ float wkeGetZoomFactor(wkeWebView webView)
     return webView->zoomFactor();
 }
 
-void wkeSetEditable(wkeWebView webView, bool editable)
-{
-    wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->setEditable(editable);
-}
-
 void wkeOnTitleChanged(wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);

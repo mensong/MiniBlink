@@ -184,8 +184,6 @@
     ITERATOR2(void, wkeSetZoomFactor, wkeWebView webView, float factor, "") \
     ITERATOR1(float, wkeGetZoomFactor, wkeWebView webView, "") \
     \
-    ITERATOR2(void, wkeSetEditable, wkeWebView webView, bool editable, "") \
-    \
     ITERATOR1(const utf8*, wkeGetString, const wkeString string, "") \
     ITERATOR1(const wchar_t*, wkeGetStringW, const wkeString string, "") \
     \

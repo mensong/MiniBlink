@@ -68,7 +68,8 @@
     ITERATOR1(const char*, wkeGetUserAgent, wkeWebView webView, "") \
     ITERATOR2(void, wkeSetUserAgentW, wkeWebView webView, const wchar_t* userAgent, "") \
     \
-    ITERATOR4(void, wkeShowDevtools, wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param, "") \
+    ITERATOR4(void, wkeShowDevtoolsW, wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param, "") \
+    ITERATOR4(void, wkeShowDevtools, wkeWebView webView, const utf8* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param, "") \
     \
     ITERATOR2(void, wkeLoadURL, wkeWebView webView, const utf8* url, "") \
     ITERATOR2(void, wkeLoadURLW, wkeWebView webView, const wchar_t* url, "") \

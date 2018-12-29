@@ -136,7 +136,7 @@ bool HandleWindowClosing(wkeWebView webWindow, void* param)
 		wchar_t path[MAX_PATH + 1] = { 0 };
 		GetProgramPath(path, MAX_PATH, L"..\\..\\");
 		StrCatW(path, L"WebInspector\\inspector.html");
-		wkeShowDevtools(webWindow, path, NULL, NULL);
+		wkeShowDevtoolsW(webWindow, path, NULL, NULL);
 	}
 
 	return bExit;
@@ -250,12 +250,14 @@ BOOL CreateWebWindow(Application* app)
 
     wkeMoveToCenter(app->window);
 	wkeShowWindow(app->window, true);
+
     wkeLoadURLW(app->window, app->url);
 
 	if (app->options.transparent)
 		wkeCreateResizeBorders(app->window, true, true, true, true, true, true, true, true);
 
 	//wkeSetMouseEnabled(app->window, false);
+	//wkeSetTransparent(app->window, true);
 
     return TRUE;
 }
@@ -278,17 +280,8 @@ void RunMessageLoop(Application* app)
 
 jsValue WKE_CALL_TYPE js_foo(jsExecState es, void* param)
 {
-	int argCount = jsArgCount(es);
-	if (argCount < 1)
-		return jsUndefined();
-
-	jsType type = jsArgType(es, 0);
-	if (JSTYPE_STRING != type)
-		return jsUndefined();
-
-	jsValue arg0 = jsArg(es, 0);
-	const char* msg = jsToTempString(es, arg0);
-	MessageBoxA(NULL, msg, "foo", MB_OK);
+	Application* app = (Application*)param;
+	wkeEditorSelectAll(app->window);
 	return jsUndefined();
 }
 
@@ -352,7 +345,7 @@ jsValue WKE_CALL_TYPE js_postUrl(jsExecState es, void* param)
 
 void InitJsBinding(Application* app)
 {
-	wkeJsBindFunction("foo", js_foo, NULL, 1);
+	wkeJsBindFunction("foo", js_foo, app, 1);
 	jsBindGetter("myVal", js_getMyVal);
 	jsBindSetter("myVal", js_setMyVal);
 	wkeJsBindGetter("wmyVal", js_getMyVal, NULL);

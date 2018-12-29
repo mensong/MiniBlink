@@ -354,13 +354,19 @@ void wkeSetUserAgentW(wkeWebView webView, const wchar_t* userAgent)
     webView->setUserAgent(userAgent);
 }
 
-void wkeShowDevtools(wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param)
+void wkeShowDevtoolsW(wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     std::vector<char> pathUtf8;
     WTF::WCharToMByte(inspectorPath, wcslen(inspectorPath), &pathUtf8, CP_UTF8);
 	pathUtf8.push_back('\0');
-    webView->showDevTools(&pathUtf8[0], callback, param);
+	wkeShowDevtools(webView, &pathUtf8[0], callback, param);
+}
+
+void wkeShowDevtools(wkeWebView webView, const utf8* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	webView->showDevTools(inspectorPath, callback, param);
 }
 
 void wkePostURL(wkeWebView wkeView,const utf8 * url,const char *szPostData,int nLen)

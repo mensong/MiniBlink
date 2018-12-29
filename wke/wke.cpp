@@ -447,22 +447,22 @@ bool wkeIsLoading(wkeWebView webView)
     return webView->isLoading();
 }
 
-bool wkeIsLoadingSucceeded(wkeWebView webView)
+bool wkeIsLoadSucceeded(wkeWebView webView)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    return webView->isLoadingSucceeded();
+    return webView->isLoadSucceeded();
 }
 
-bool wkeIsLoadingFailed(wkeWebView webView)
+bool wkeIsLoadFailed(wkeWebView webView)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    return webView->isLoadingFailed();
+    return webView->isLoadFailed();
 }
 
-bool wkeIsLoadingCompleted(wkeWebView webView)
+bool wkeIsLoadCompleted(wkeWebView webView)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    return webView->isLoadingCompleted();
+    return webView->isLoadCompleted();
 }
 
 bool wkeIsDocumentReady(wkeWebView webView)
@@ -471,7 +471,7 @@ bool wkeIsDocumentReady(wkeWebView webView)
     return webView->isDocumentReady();
 }
 
-void wkeStopLoading(wkeWebView webView)
+void wkeStopLoad(wkeWebView webView)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->stopLoading();

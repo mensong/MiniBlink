@@ -496,7 +496,7 @@ void WebContents::stopApi() {
 
     ThreadCall::callBlinkThreadAsync([self, id] {
         if (IdLiveDetect::get()->isLive(id))
-            wkeStopLoading(self->m_view);
+            wkeStopLoad(self->m_view);
     });
 }
 

@@ -585,8 +585,8 @@ namespace wke {
 		virtual const utf8* url() const = 0;
 
 		virtual bool isLoading() const = 0;        /*document load sucessed*/
-		virtual bool isLoadingFailed() const = 0;    /*document load failed*/
-		virtual bool isLoadingSucceeded() const = 0;  /*document load complete*/
+		virtual bool isLoadFailed() const = 0;    /*document load failed*/
+		virtual bool isLoadSucceeded() const = 0;  /*document load complete*/
 		virtual bool isDocumentReady() const = 0; /*document ready*/
 		virtual void stopLoading() = 0;
 		virtual void reload() = 0;

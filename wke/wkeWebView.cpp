@@ -358,23 +358,23 @@ bool CWebView::isLoading() const
     return frameClient->isLoading();
 }
 
-bool CWebView::isLoadingSucceeded() const
+bool CWebView::isLoadSucceeded() const
 {
     content::WebFrameClientImpl* frameClient = m_webPage->webFrameClientImpl();
     bool b = frameClient->isLoaded();
     return b;
 }
 
-bool CWebView::isLoadingFailed() const
+bool CWebView::isLoadFailed() const
 {
     content::WebFrameClientImpl* frameClient = m_webPage->webFrameClientImpl();
     bool b = frameClient->isLoadFailed();
     return b;
 }
 
-bool CWebView::isLoadingCompleted() const
+bool CWebView::isLoadCompleted() const
 {
-    bool b = isLoadingSucceeded() || isLoadingFailed();
+    bool b = isLoadSucceeded() || isLoadFailed();
     return b;
 }
 

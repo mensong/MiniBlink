@@ -90,11 +90,11 @@
 	ITERATOR2(wkeWebFrameHandle, wkeGetFrameHandleByUrl, wkeWebView webView, const utf8* url, "根据URL获得对应的frame handle，url参数为全路径地址，不存在则返回NULL") \
     \
     ITERATOR1(bool, wkeIsLoading, wkeWebView webView, "") \
-    ITERATOR1(bool, wkeIsLoadingSucceeded, wkeWebView webView, "") \
-    ITERATOR1(bool, wkeIsLoadingFailed, wkeWebView webView, "") \
-    ITERATOR1(bool, wkeIsLoadingCompleted, wkeWebView webView, "") \
+    ITERATOR1(bool, wkeIsLoadSucceeded, wkeWebView webView, "") \
+    ITERATOR1(bool, wkeIsLoadFailed, wkeWebView webView, "") \
+    ITERATOR1(bool, wkeIsLoadCompleted, wkeWebView webView, "") \
     ITERATOR1(bool, wkeIsDocumentReady, wkeWebView webView, "") \
-    ITERATOR1(void, wkeStopLoading, wkeWebView webView, "") \
+    ITERATOR1(void, wkeStopLoad, wkeWebView webView, "") \
     ITERATOR1(void, wkeReload, wkeWebView webView, "") \
     ITERATOR2(void, wkeGoToOffset, wkeWebView webView, int offset, "") \
     ITERATOR2(void, wkeGoToIndex, wkeWebView webView, int index, "") \

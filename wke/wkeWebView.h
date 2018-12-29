@@ -147,9 +147,9 @@ public:
     void setUserAgent(const wchar_t * useragent);
     
     bool isLoading() const;
-    bool isLoadingSucceeded() const;
-    bool isLoadingFailed() const;
-    bool isLoadingCompleted() const;
+    bool isLoadSucceeded() const;
+    bool isLoadFailed() const;
+    bool isLoadCompleted() const;
     virtual bool isDocumentReady() const override;
     void stopLoading();
     void reload();

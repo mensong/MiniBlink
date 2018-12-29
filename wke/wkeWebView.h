@@ -153,8 +153,8 @@ public:
     virtual bool isDocumentReady() const override;
     void stopLoading();
     void reload();
-    void goToOffset(int offset);
-    void goToIndex(int index);
+    void goToHistoryOffset(int offset);
+    void goToHistoryIndex(int index);
 
     const utf8* title() override;
     const wchar_t* titleW() override;

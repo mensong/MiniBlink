@@ -21,7 +21,6 @@ public:
 NavigationController::NavigationController(WebPageImpl* page)
 {
     m_currentOffset = -1;
-    m_lastNavDirection = 0;
     m_page = page;
 }
 
@@ -75,61 +74,41 @@ static bool shouldDoSameDocumentNavigationTo(const HistoryEntry* curItem, const 
     return false;
 }
 
-void NavigationController::navigate(int offset)
+void NavigationController::navigate(int pos)
 {
-    int pos = m_currentOffset + offset;
     if (pos < 0 || pos > (int)(m_items.size() - 1))
         return;
     HistoryEntry* item = m_items[pos];
     HistoryEntry* curItem = nullptr;
     if (m_currentOffset >= 0 && m_currentOffset < (int)m_items.size())
-        curItem = m_items[m_currentOffset];
-    if (!curItem)
-        return;
-
-    m_lastNavDirection = offset;
-
-#if 0 // def DEBUG
-    OutputDebugStringA("navigate:\n");
-    for (int i = 0; i < m_items.size(); ++i) {
-        HistoryEntry* it = m_items[i];
-        String url = it->urlString();
-        OutputDebugStringA(url.utf8().data());
-        OutputDebugStringA("\n");
-    }
-    OutputDebugStringA("navigate end\n");
-    
-#endif // DEBUG
+        curItem = m_items[m_currentOffset];	
     blink::WebHistoryLoadType type = blink::WebHistoryDifferentDocumentLoad;
-    if (shouldDoSameDocumentNavigationTo(curItem, item))
-        type = blink::WebHistorySameDocumentLoad;
+	if (curItem)
+	{
+		if (shouldDoSameDocumentNavigationTo(curItem, item))
+			type = blink::WebHistorySameDocumentLoad;
+	}
+
     m_page->loadHistoryItem(WebPage::kMainFrameId, *item, type, blink::WebURLRequest::UseProtocolCachePolicy);
+	m_currentOffset = pos;
 }
 
 void NavigationController::navigateBackForwardSoon(int offset)
 {
-    blink::Platform::current()->currentThread()->postTask(FROM_HERE, WTF::bind(&NavigationController::navigate, this, offset));
+	blink::Platform::current()->currentThread()->postTask(FROM_HERE, WTF::bind(&NavigationController::navigate, this, m_currentOffset + offset));
 }
 
 void NavigationController::navigateToIndex(int index)
 {
-    int offset = m_currentOffset - index;
-    navigateBackForwardSoon(offset);
+	blink::Platform::current()->currentThread()->postTask(FROM_HERE, WTF::bind(&NavigationController::navigate, this, index));
 }
 
 int NavigationController::findEntry(const blink::WebHistoryItem& item) const
 {
-    if (m_lastNavDirection > 0) {
-        for (int i = m_currentOffset + 1; i < m_items.size(); ++i) {
-            if (m_items[i]->urlString() == item.urlString())
-                return i;
-        }
-    } else {
-        for (int i = m_currentOffset - 1; i >= 0; --i) {
-            if (m_items[i]->urlString() == item.urlString())
-                return i;
-        }
-    }
+	for (int i = 0; i < m_items.size(); ++i) {
+		if (m_items[i]->urlString() == item.urlString())
+			return i;
+	}
 
     return -1;
 }

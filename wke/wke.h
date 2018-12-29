@@ -96,8 +96,8 @@
     ITERATOR1(bool, wkeIsDocumentReady, wkeWebView webView, "") \
     ITERATOR1(void, wkeStopLoad, wkeWebView webView, "") \
     ITERATOR1(void, wkeReload, wkeWebView webView, "") \
-    ITERATOR2(void, wkeGoToOffset, wkeWebView webView, int offset, "") \
-    ITERATOR2(void, wkeGoToIndex, wkeWebView webView, int index, "") \
+    ITERATOR2(void, wkeGoToHistoryOffset, wkeWebView webView, int offset, "转到当前偏移的历史记录") \
+    ITERATOR2(void, wkeGoToHistoryIndex, wkeWebView webView, int index, "转到指定的历史记录") \
     \
     ITERATOR1(int, wkeGetWebviewId, wkeWebView webView, "") \
     ITERATOR1(bool, wkeIsWebviewAlive, int id, "") \
@@ -145,10 +145,14 @@
     ITERATOR2(void, wkePerformCookieCommand, wkeWebView webView, wkeCookieCommand command, "") \
     ITERATOR2(void, wkeSetCookieEnabled, wkeWebView webView, bool enable, "") \
     ITERATOR1(bool, wkeIsCookieEnabled, wkeWebView webView, "") \
-    ITERATOR2(void, wkeSetCookieJarPath, wkeWebView webView, const WCHAR* path, "") \
-    ITERATOR2(void, wkeSetCookieJarFullPath, wkeWebView webView, const WCHAR* path, "") \
-    ITERATOR2(void, wkeSetLocalStorageFullPath, wkeWebView webView, const WCHAR* path, "") \
-    ITERATOR2(void, wkeAddPluginDirectory, wkeWebView webView, const WCHAR* path, "") \
+    ITERATOR2(void, wkeSetCookieJarDirectory, wkeWebView webView, const char* path, "设置cookie文件所在的目录（不带文件名）") \
+    ITERATOR2(void, wkeSetCookieJarDirectoryW, wkeWebView webView, const wchar_t* path, "设置cookie文件所在的目录（不带文件名）") \
+    ITERATOR2(void, wkeSetCookieJarFilePath, wkeWebView webView, const char* path, "") \
+    ITERATOR2(void, wkeSetCookieJarFilePathW, wkeWebView webView, const wchar_t* path, "") \
+    ITERATOR2(void, wkeSetLocalStorageDirectory, wkeWebView webView, const char* path, "") \
+    ITERATOR2(void, wkeSetLocalStorageDirectoryW, wkeWebView webView, const wchar_t* path, "") \
+    ITERATOR2(void, wkeAddPluginDirectory, wkeWebView webView, const char* path, "") \
+    ITERATOR2(void, wkeAddPluginDirectoryW, wkeWebView webView, const wchar_t* path, "") \
     \
     ITERATOR2(void, wkeSetMediaVolume, wkeWebView webView, float volume, "") \
     ITERATOR1(float, wkeGetMediaVolume, wkeWebView webView, "") \

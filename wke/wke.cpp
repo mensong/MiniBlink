@@ -32,6 +32,7 @@
 #include "wtf/text/WTFStringUtil.h"
 #include <v8.h>
 #include <shlwapi.h>
+#include "net/FileSystem.h"
 
 namespace net {
 void setCookieJarPath(const WCHAR* path);
@@ -483,16 +484,16 @@ void wkeReload(wkeWebView webView)
     webView->reload();
 }
 
-void wkeGoToOffset(wkeWebView webView, int offset)
+void wkeGoToHistoryOffset(wkeWebView webView, int offset)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->goToOffset(offset);
+    webView->goToHistoryOffset(offset);
 }
 
-void wkeGoToIndex(wkeWebView webView, int index)
+void wkeGoToHistoryIndex(wkeWebView webView, int index)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->goToIndex(index);
+    webView->goToHistoryIndex(index);
 }
 
 const utf8* wkeGetTitle(wkeWebView webView)
@@ -721,7 +722,15 @@ bool wkeIsCookieEnabled(wkeWebView webView)
     return webView->isCookieEnabled();
 }
 
-void wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)
+void wkeSetCookieJarDirectory(wkeWebView webView, const char* path)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	if (!path)
+		return;
+	webView->setCookieJarPath(path);
+}
+
+void wkeSetCookieJarDirectoryW(wkeWebView webView, const wchar_t* path)
 {
 	wke::checkThreadCallIsValid(__FUNCTION__);
 	if (!path)
@@ -741,7 +750,15 @@ void wkeSetCookieJarPath(wkeWebView webView, const WCHAR* path)
 	webView->setCookieJarPath(&pathStrA[0]);
 }
 
-void wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)
+void wkeSetCookieJarFilePath(wkeWebView webView, const char* path)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	if (!path)
+		return;
+	webView->setCookieJarPath(path);
+}
+
+void wkeSetCookieJarFilePathW(wkeWebView webView, const wchar_t* path)
 {
 	wke::checkThreadCallIsValid(__FUNCTION__);
 	if (!path)
@@ -752,12 +769,13 @@ void wkeSetCookieJarFullPath(wkeWebView webView, const WCHAR* path)
 	if (0 == jarPathA.size())
 		return;
 	jarPathA.push_back('\0');
-	net::WebURLLoaderManager::setCookieJarFullPath(&jarPathA[0]);
+	//net::WebURLLoaderManager::setCookieJarFullPath(&jarPathA[0]);
+	webView->setCookieJarPath(&jarPathA[0]);
 }
 
 String* kLocalStorageFullPath = nullptr;
 
-void wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* path)
+void wkeSetLocalStorageDirectory(wkeWebView webView, const char* path)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     if (!path)
@@ -772,15 +790,47 @@ void wkeSetLocalStorageFullPath(wkeWebView webView, const WCHAR* path)
         return;
     }
 
-    if (!kLocalStorageFullPath->endsWith(L'\\'))
-        kLocalStorageFullPath->append(L'\\');
+    if (!kLocalStorageFullPath->endsWith('\\'))
+        kLocalStorageFullPath->append('\\');
+
+	if (!net::fileExists(*kLocalStorageFullPath))
+		net::createDirectory(*kLocalStorageFullPath);
 }
 
-void wkeAddPluginDirectory(wkeWebView webView, const WCHAR* path)
+void wkeSetLocalStorageDirectoryW(wkeWebView webView, const wchar_t* path)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	if (!path)
+		return;
+
+	if (kLocalStorageFullPath)
+		delete kLocalStorageFullPath;
+	kLocalStorageFullPath = new String(path);
+	if (kLocalStorageFullPath->isEmpty()) {
+		delete kLocalStorageFullPath;
+		kLocalStorageFullPath = nullptr;
+		return;
+	}
+
+	if (!kLocalStorageFullPath->endsWith(L'\\'))
+		kLocalStorageFullPath->append(L'\\');
+
+	if (!net::fileExists(*kLocalStorageFullPath))
+		net::createDirectory(*kLocalStorageFullPath);
+}
+
+void wkeAddPluginDirectory(wkeWebView webView, const char* path)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     String directory(path);
     content::PluginDatabase::installedPlugins()->addExtraPluginDirectory(directory);
+}
+
+void wkeAddPluginDirectoryW(wkeWebView webView, const wchar_t* path)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	String directory(path);
+	content::PluginDatabase::installedPlugins()->addExtraPluginDirectory(directory);
 }
 
 void wkeSetMediaVolume(wkeWebView webView, float volume)

@@ -526,7 +526,7 @@ void WebContents::goToOffsetApi(int offset) {
 
     ThreadCall::callBlinkThreadAsync([self, id, offset] {
         if (IdLiveDetect::get()->isLive(id))
-            wkeGoToOffset(self->m_view, offset);
+            wkeGoToHistoryOffset(self->m_view, offset);
     });
 }
 
@@ -536,7 +536,7 @@ void WebContents::goToIndexApi(int index) {
 
     ThreadCall::callBlinkThreadAsync([self, id, index] {
         if (IdLiveDetect::get()->isLive(id))
-            wkeGoToIndex(self->m_view, index);
+            wkeGoToHistoryIndex(self->m_view, index);
     });
 }
 

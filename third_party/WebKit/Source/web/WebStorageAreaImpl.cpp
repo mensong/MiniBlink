@@ -184,8 +184,9 @@ void WebStorageAreaImpl::delaySaveTimerFired(blink::Timer<WebStorageAreaImpl>*)
     if (0 == pageStorageArea->size())
         return;
 
-    if (!net::fileExists(buildLocalStorageDirectoryPath()))
-        net::createDirectory(buildLocalStorageDirectoryPath());
+	String sStorageBasePath = buildLocalStorageDirectoryPath();
+    if (!net::fileExists(sStorageBasePath))
+        net::createDirectory(sStorageBasePath);
 
     String localStoragePath = buildLocalStorageFileNameString(originUrl);
 

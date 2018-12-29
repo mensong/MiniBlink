@@ -405,14 +405,14 @@ void CWebView::reload()
     m_webPage->mainFrame()->reload();
 }
 
-void CWebView::goToOffset(int offset)
+void CWebView::goToHistoryOffset(int offset)
 {
-    m_webPage->goToOffset(offset);
+    m_webPage->goToHistoryOffset(offset);
 }
 
-void CWebView::goToIndex(int index)
+void CWebView::goToHistoryIndex(int index)
 {
-    m_webPage->goToIndex(index);
+    m_webPage->goToHistoryIndex(index);
 }
 
 const utf8* CWebView::title()

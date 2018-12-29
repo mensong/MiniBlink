@@ -25,7 +25,7 @@ void PageNetExtraData::setCookieJarFullPath(const std::string& path)
 	WTF::Locker<WTF::Mutex> locker(*mutex);
 
     if (m_cookieJar) {
-        OutputDebugStringA("PageNetExtraData::setCookieJarPath has benn set");
+        OutputDebugStringA("PageNetExtraData::setCookieJarPath has been set");
         return;
     }
 

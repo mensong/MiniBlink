@@ -7309,6 +7309,7 @@
     <ClCompile Include="..\..\wke\wke.cpp" />
     <ClCompile Include="..\..\wke\wkeDialogResizeBorder.cpp" />
     <ClCompile Include="..\..\wke\wkeGlobalVar.cpp" />
+    <ClCompile Include="..\..\wke\wkeInputBoxW.cpp" />
     <ClCompile Include="..\..\wke\wkeJsBind.cpp" />
     <ClCompile Include="..\..\wke\wkeNetHook.cpp" />
     <ClCompile Include="..\..\wke\wkeString.cpp" />
@@ -11728,6 +11729,7 @@
     <ClInclude Include="..\..\wke\wkedefine.h" />
     <ClInclude Include="..\..\wke\wkeDialogResizeBorder.h" />
     <ClInclude Include="..\..\wke\wkeGlobalVar.h" />
+    <ClInclude Include="..\..\wke\wkeInputBoxW.h" />
     <ClInclude Include="..\..\wke\wkeJsBind.h" />
     <ClInclude Include="..\..\wke\wkeMediaPlayer.h" />
     <ClInclude Include="..\..\wke\wkeNetHook.h" />

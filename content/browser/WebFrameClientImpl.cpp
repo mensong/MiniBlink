@@ -728,7 +728,7 @@ void WebFrameClientImpl::runModalAlertDialog(const WebString& message)
         return;
 
     Vector<UChar> text = WTF::ensureUTF16UChar(message, true);
-    ::MessageBoxW(nullptr, text.data(), L"Miniblink Alert", 0);
+    ::MessageBoxW(nullptr, text.data(), L"Miniblink Alert", MB_OK);
 }
 
 bool WebFrameClientImpl::runModalConfirmDialog(const WebString& message)

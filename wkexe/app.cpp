@@ -251,6 +251,11 @@ BOOL CreateWebWindow(Application* app)
     wkeMoveToCenter(app->window);
 	wkeShowWindow(app->window, true);
 
+	//wkeSetCookieJarDirectory(app->window, L"D:\\");
+	//wkeSetCookieJarFilePath(app->window, "D:\\123\\1.cookie");
+	//wkeSetLocalStorageDirectory(app->window, "D:\\123");
+
+
     wkeLoadURLW(app->window, app->url);
 
 	if (app->options.transparent)
@@ -258,7 +263,6 @@ BOOL CreateWebWindow(Application* app)
 
 	//wkeSetMouseEnabled(app->window, false);
 	//wkeSetTransparent(app->window, true);
-
     return TRUE;
 }
 
@@ -281,7 +285,9 @@ void RunMessageLoop(Application* app)
 jsValue WKE_CALL_TYPE js_foo(jsExecState es, void* param)
 {
 	Application* app = (Application*)param;
-	wkeEditorSelectAll(app->window);
+	//wkeEditorSelectAll(app->window);
+	wkeGoToHistoryIndex(app->window, 1);
+	//wkeGoToHistoryOffset(app->window, -2);
 	return jsUndefined();
 }
 

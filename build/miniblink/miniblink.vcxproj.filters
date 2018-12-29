@@ -10173,6 +10173,9 @@
     <ClCompile Include="..\..\content\resources\MediaPlayerData.cpp">
       <Filter>content\resources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\wke\wkeInputBoxW.cpp">
+      <Filter>wke</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\public\platform\modules\app_banner\WebAppBannerClient.h">
@@ -23090,6 +23093,9 @@
     </ClInclude>
     <ClInclude Include="..\..\third_party\WebKit\Source\core\dom\URLSearchParams.h">
       <Filter>third_party\Webkit\Source\core\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\wke\wkeInputBoxW.h">
+      <Filter>wke</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

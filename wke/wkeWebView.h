@@ -180,7 +180,7 @@ public:
     HDC viewDC();
     HWND windowHandle() const;
     void setHandle(HWND wnd);
-    void setHandleOffset(int x, int y);
+    void setHwndRenderOffset(int x, int y);
     void setViewSettings(const wkeViewSettings*);
     bool canGoBack() const override;
     bool goBack() override;

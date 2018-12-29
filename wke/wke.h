@@ -59,7 +59,7 @@
     ITERATOR2(void, wkeSetName, wkeWebView webView, const char* name, "") \
     \
     ITERATOR2(void, wkeSetHandle, wkeWebView webView, HWND wnd, "") \
-    ITERATOR3(void, wkeSetHandleOffset, wkeWebView webView, int x, int y, "") \
+    ITERATOR3(void, wkeSetHwndRenderOffset, wkeWebView webView, int x, int y, "") \
     \
     ITERATOR1(bool, wkeIsTransparent, wkeWebView webView, "") \
     ITERATOR2(void, wkeSetTransparent, wkeWebView webView, bool transparent, "") \

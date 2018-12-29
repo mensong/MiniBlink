@@ -511,7 +511,7 @@ void CWebView::setHandle(HWND wnd)
     m_webPage->setHWND(wnd);
 }
 
-void CWebView::setHandleOffset(int x, int y)
+void CWebView::setHwndRenderOffset(int x, int y)
 {
     blink::IntPoint offset(x, y);
     m_webPage->setHwndRenderOffset(offset);

@@ -312,10 +312,10 @@ void wkeSetHandle(wkeWebView webView, HWND wnd)
     webView->setHandle(wnd);
 }
 
-void wkeSetHandleOffset(wkeWebView webView, int x, int y)
+void wkeSetHwndRenderOffset(wkeWebView webView, int x, int y)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
-    webView->setHandleOffset(x, y);
+    webView->setHwndRenderOffset(x, y);
 }
 
 void wkeSetViewSettings(wkeWebView webView, const wkeViewSettings* settings)

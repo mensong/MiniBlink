@@ -76,19 +76,6 @@ void WebFrameClientImpl::didAddMessageToConsole(const WebConsoleMessage& message
 //     outstr.append(L" \n");
 //     OutputDebugStringW(outstr.charactersWithNullTermination().data());
 
-#if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
-    wke::AutoDisableFreeV8TempObejct autoDisableFreeV8TempObejct;
-    wke::CWebViewHandler& handler = m_webPage->wkeHandler();
-    if (handler.consoleCallback && m_webPage->getState() == pageInited) {
-        wke::CString text(message.text);
-        wke::CString sourceNameStr(sourceName);
-        wke::CString stackTraceStr(stackTrace);
-        handler.consoleCallback(m_webPage->wkeWebView(), handler.consoleCallbackParam,
-            (wkeConsoleLevel)message.level, &text, &sourceNameStr, sourceLine, &stackTraceStr);
-		return;
-    }
-#endif
-
 	WTF::String outstr;
 	outstr.append(String::format("Console:[%d],[", sourceLine));
 	outstr.append(message.text);
@@ -104,6 +91,18 @@ void WebFrameClientImpl::didAddMessageToConsole(const WebConsoleMessage& message
 
 	Vector<UChar> utf16 = WTF::ensureUTF16UChar(outstr, true);
 	OutputDebugStringW(utf16.data());
+
+#if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
+    wke::AutoDisableFreeV8TempObejct autoDisableFreeV8TempObejct;
+    wke::CWebViewHandler& handler = m_webPage->wkeHandler();
+    if (handler.consoleCallback && m_webPage->getState() == pageInited) {
+        wke::CString text(message.text);
+        wke::CString sourceNameStr(sourceName);
+        wke::CString stackTraceStr(stackTrace);
+        handler.consoleCallback(m_webPage->wkeWebView(), handler.consoleCallbackParam,
+            (wkeConsoleLevel)message.level, &text, &sourceNameStr, sourceLine, &stackTraceStr);
+    }
+#endif
 }
 
 void WebFrameClientImpl::setWebPage(WebPage* webPage)

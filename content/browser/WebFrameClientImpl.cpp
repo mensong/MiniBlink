@@ -76,22 +76,6 @@ void WebFrameClientImpl::didAddMessageToConsole(const WebConsoleMessage& message
 //     outstr.append(L" \n");
 //     OutputDebugStringW(outstr.charactersWithNullTermination().data());
 
-    WTF::String outstr;
-    outstr.append(String::format("Console:[%d],[", sourceLine));
-    outstr.append(message.text);
-    outstr.append("],[");
-    outstr.append(sourceName);
-    outstr.append("]\n");
-
-    if (WTF::kNotFound != outstr.find("__callstack__") && 0 != stackTrace.length()) {
-        outstr.append("stackTrace:");
-        outstr.append(stackTrace);
-        outstr.append("\n");
-    }
-
-    Vector<UChar> utf16 = WTF::ensureUTF16UChar(outstr, true);
-    OutputDebugStringW(utf16.data());
-
 #if (defined ENABLE_WKE) && (ENABLE_WKE == 1)
     wke::AutoDisableFreeV8TempObejct autoDisableFreeV8TempObejct;
     wke::CWebViewHandler& handler = m_webPage->wkeHandler();
@@ -101,8 +85,25 @@ void WebFrameClientImpl::didAddMessageToConsole(const WebConsoleMessage& message
         wke::CString stackTraceStr(stackTrace);
         handler.consoleCallback(m_webPage->wkeWebView(), handler.consoleCallbackParam,
             (wkeConsoleLevel)message.level, &text, &sourceNameStr, sourceLine, &stackTraceStr);
+		return;
     }
 #endif
+
+	WTF::String outstr;
+	outstr.append(String::format("Console:[%d],[", sourceLine));
+	outstr.append(message.text);
+	outstr.append("],[");
+	outstr.append(sourceName);
+	outstr.append("]\n");
+
+	if (WTF::kNotFound != outstr.find("__callstack__") && 0 != stackTrace.length()) {
+		outstr.append("stackTrace:");
+		outstr.append(stackTrace);
+		outstr.append("\n");
+	}
+
+	Vector<UChar> utf16 = WTF::ensureUTF16UChar(outstr, true);
+	OutputDebugStringW(utf16.data());
 }
 
 void WebFrameClientImpl::setWebPage(WebPage* webPage)

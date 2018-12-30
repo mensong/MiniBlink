@@ -227,6 +227,12 @@ void HandleNetGetFavicon(wkeWebView webView, void* param, const utf8* url, wkeMe
 	printf(url);
 }
 
+void HandleConsole(wkeWebView webView, void* param, wkeConsoleLevel level, const wkeString message,
+	const wkeString sourceName, unsigned sourceLine, const wkeString stackTrace)
+{
+	
+}
+
 // 创建主页面窗口
 BOOL CreateWebWindow(Application* app)
 {
@@ -247,6 +253,7 @@ BOOL CreateWebWindow(Application* app)
 	wkeOnNetHookRequest(app->window, NetHookRequest, app);
 	wkeOnResponse(app->window, HandleNetResponse, app);
 	wkeNetGetFavicon(app->window, HandleNetGetFavicon, app);
+	wkeOnConsole(app->window, HandleConsole, app);
 
     wkeMoveToCenter(app->window);
 	wkeShowWindow(app->window, true);

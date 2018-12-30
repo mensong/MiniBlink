@@ -1126,30 +1126,17 @@ bool defaultRunPromptBox(wkeWebView webView, void* param, const wkeString msg, c
 {
 	int width = INPUT_BOX_WIDTH;
 	int height = INPUT_BOX_HEIGHT;
-	//RECT rect = { 0 };
-	//GetWindowRect(m_hWnd, &rect);
-	//width = rect.right - rect.left;
-	//height = rect.bottom - rect.top;
 
 	int parentWidth = 0;
 	int parentHeight = 0;
-	//if (0 != (::GetWindowLong(m_hWnd, GWL_STYLE) & WS_CHILD)) {
-	//	HWND parent = ::GetParent(m_hWnd);
-	//	RECT rect = { 0 };
-	//	::GetClientRect(parent, &rect);
-	//	parentWidth = rect.right - rect.left;
-	//	parentHeight = rect.bottom - rect.top;
-	//}
-	//else {
-		parentWidth = ::GetSystemMetrics(SM_CXSCREEN);
-		parentHeight = ::GetSystemMetrics(SM_CYSCREEN);
-	//}
+	parentWidth = ::GetSystemMetrics(SM_CXSCREEN);
+	parentHeight = ::GetSystemMetrics(SM_CYSCREEN);
 
 	int x = (parentWidth - width) / 2;
 	int y = (parentHeight - height) / 2;
 
 	_InitInputBoxW(NULL);
-	*result =  _InputBoxW(wkeGetStringW(msg), L"MiniBlink PromptBox", wkeGetStringW(msg), x, y);
+	*result =  _InputBoxW(wkeGetStringW(msg), L"MiniBlink PromptBox", wkeGetStringW(c), x, y);
     return true;
 }
 

@@ -19,7 +19,7 @@ PageNetExtraData::~PageNetExtraData()
         delete m_cookieJar;
 }
 
-void PageNetExtraData::setCookieJarFullPath(const std::string& path)
+void PageNetExtraData::setCookieJarFilePath(const std::string& path)
 {
 	WTF::Mutex* mutex = sharedResourceMutex(CURL_LOCK_DATA_COOKIE);
 	WTF::Locker<WTF::Mutex> locker(*mutex);

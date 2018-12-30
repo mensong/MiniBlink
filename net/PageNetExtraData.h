@@ -16,7 +16,7 @@ public:
     PageNetExtraData();
     ~PageNetExtraData();
 
-    void setCookieJarFullPath(const std::string& cookieJarFileName);
+    void setCookieJarFilePath(const std::string& cookieJarFileName);
     CURLSH* getCurlShareHandle();
     std::string getCookieJarFullPath();
     net::WebCookieJarImpl* getCookieJar() const { return m_cookieJar; }

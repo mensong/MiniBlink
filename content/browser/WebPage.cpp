@@ -495,7 +495,7 @@ PassRefPtr<net::PageNetExtraData> WebPage::getPageNetExtraData()
 void WebPage::setCookieJarPath(const char* path)
 {
     if (m_pageImpl)
-        return m_pageImpl->setCookieJarPath(path);
+        return m_pageImpl->setCookieJarFilePath(path);
 }
 
 WebPage* WebPage::getSelfForCurrentContext()

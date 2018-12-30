@@ -1957,7 +1957,7 @@ private:
             wkeOnDocumentReady(webview, onDocumentReadyInBlinkThread, self);
             wkeOnLoadUrlBegin(webview, handleLoadUrlBegin, self);
             wkeOnTitleChanged(webview, onTitleChangedInBlinkThread, self);
-            wkeOnURLChanged2(webview, onURLChangedCallback, self);
+            wkeOnUrlChanged2(webview, onURLChangedCallback, self);
             wkeOnLoadingFinish(webview, onLoadingFinishCallback, self);
             wkeOnOtherLoad(webview, onOtherLoadCallback, self);
             wkeOnNavigation(webview, onNavigationCallback, self);

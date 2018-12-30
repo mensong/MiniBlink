@@ -1054,13 +1054,13 @@ void CWebView::onMouseOverUrlChanged(wkeTitleChangedCallback callback, void* cal
     m_webPage->wkeHandler().mouseOverUrlChangedCallbackParam = callbackParam;
 }
 
-void CWebView::onURLChanged(wkeURLChangedCallback callback, void* callbackParam)
+void CWebView::onURLChanged(wkeUrlChangedCallback callback, void* callbackParam)
 {
     m_webPage->wkeHandler().urlChangedCallback = callback;
     m_webPage->wkeHandler().urlChangedCallbackParam = callbackParam;
 }
 
-void CWebView::onURLChanged2(wkeURLChangedCallback2 callback, void* callbackParam)
+void CWebView::onURLChanged2(wkeUrlChangedCallback2 callback, void* callbackParam)
 {
     m_webPage->wkeHandler().urlChangedCallback2 = callback;
     m_webPage->wkeHandler().urlChangedCallback2Param = callbackParam;
@@ -1419,7 +1419,7 @@ public:
 
         content::WebPage::connetDevTools(devToolsWebView->webPage(), m_parent->webPage());
 
-        wkeLoadURL(devToolsWebView, m_url.c_str());
+        wkeLoadUrl(devToolsWebView, m_url.c_str());
         wkeShowWindow(devToolsWebView, TRUE);
         wkeOnWindowDestroy(devToolsWebView, handleDevToolsWebViewDestroy, m_parent);
         wkeSetWindowTitle(devToolsWebView, "Miniblink Devtools");

@@ -126,11 +126,11 @@ bool HandleWindowClosing(wkeWebView webWindow, void* param)
 
 	if (!bExit)
 	{
-		//wkeLoadURL(webWindow, "www.baidu.com");
+		//wkeLoadUrl(webWindow, "www.baidu.com");
 
 		//wkeWebView newWin = wkeCreateWebWindow(WKE_WINDOW_TYPE_POPUP, NULL, 0, 0, 800, 600);
 		//wkeShowWindow(newWin, true);
-		//wkeLoadURL(newWin, "www.baidu.com");
+		//wkeLoadUrl(newWin, "www.baidu.com");
 		//wkeCreateResizeBorders(newWin, true, true, true, true, true, true, true, true);
 
 		wchar_t path[MAX_PATH + 1] = { 0 };
@@ -263,7 +263,7 @@ BOOL CreateWebWindow(Application* app)
 	//wkeSetLocalStorageDirectory(app->window, "D:\\123");
 
 
-    wkeLoadURLW(app->window, app->url);
+    wkeLoadUrlW(app->window, app->url);
 
 	if (app->options.transparent)
 		wkeCreateResizeBorders(app->window, true, true, true, true, true, true, true, true);
@@ -331,7 +331,7 @@ jsValue WKE_CALL_TYPE js_loadUrl(jsExecState es, void* param)
 	if (nArgc == 1)
 	{
 		const utf8* url = jsToString(es, jsArg(es, 0));
-		wkeLoadURL(app->window, url);
+		wkeLoadUrl(app->window, url);
 	}
 
 	return jsUndefined();
@@ -350,7 +350,7 @@ jsValue WKE_CALL_TYPE js_postUrl(jsExecState es, void* param)
 		const utf8* url = jsToString(es, jsArg(es, 0));
 		const utf8* data = jsToString(es, jsArg(es, 1));
 		const utf8* dataType = jsToString(es, jsArg(es, 2));
-		wkePostURL2(app->window, url, data, strlen(data), dataType);
+		wkePostUrl2(app->window, url, data, strlen(data), dataType);
 	}
 
 	return jsUndefined();

@@ -71,21 +71,21 @@
     ITERATOR4(void, wkeShowDevtoolsW, wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param, "") \
     ITERATOR4(void, wkeShowDevtools, wkeWebView webView, const utf8* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param, "") \
     \
-    ITERATOR2(void, wkeLoadURL, wkeWebView webView, const utf8* url, "") \
-    ITERATOR2(void, wkeLoadURLW, wkeWebView webView, const wchar_t* url, "") \
-    ITERATOR4(void, wkePostURL, wkeWebView wkeView, const utf8* url, const char* postData, int postLen, "") \
-    ITERATOR4(void, wkePostURLW, wkeWebView wkeView, const wchar_t* url, const char* postData, int postLen, "") \
-	ITERATOR5(void, wkePostURL2, wkeWebView wkeView, const utf8* url, const char* postData, int postLen, const utf8* contentType, "") \
-    ITERATOR5(void, wkePostURLW2, wkeWebView wkeView, const wchar_t* url, const char* postData, int postLen, const wchar_t* contentType, "") \
+    ITERATOR2(void, wkeLoadUrl, wkeWebView webView, const utf8* url, "") \
+    ITERATOR2(void, wkeLoadUrlW, wkeWebView webView, const wchar_t* url, "") \
+    ITERATOR4(void, wkePostUrl, wkeWebView wkeView, const utf8* url, const char* postData, int postLen, "") \
+    ITERATOR4(void, wkePostUrlW, wkeWebView wkeView, const wchar_t* url, const char* postData, int postLen, "") \
+	ITERATOR5(void, wkePostUrl2, wkeWebView wkeView, const utf8* url, const char* postData, int postLen, const utf8* contentType, "") \
+    ITERATOR5(void, wkePostUrlW2, wkeWebView wkeView, const wchar_t* url, const char* postData, int postLen, const wchar_t* contentType, "") \
     \
-    ITERATOR2(void, wkeLoadHTML, wkeWebView webView, const utf8* html, "") \
+    ITERATOR2(void, wkeLoadHtml, wkeWebView webView, const utf8* html, "") \
     ITERATOR3(void, wkeLoadHtmlWithBaseUrl, wkeWebView webView, const utf8* html, const utf8* baseUrl, "") \
     ITERATOR2(void, wkeLoadHTMLW, wkeWebView webView, const wchar_t* html, "") \
     \
     ITERATOR2(void, wkeLoadFile, wkeWebView webView, const utf8* filename, "") \
     ITERATOR2(void, wkeLoadFileW, wkeWebView webView, const wchar_t* filename, "") \
     \
-    ITERATOR1(const utf8*, wkeGetURL, wkeWebView webView, "") \
+    ITERATOR1(const utf8*, wkeGetUrl, wkeWebView webView, "") \
     ITERATOR2(const utf8*, wkeGetFrameUrl, wkeWebView webView, wkeWebFrameHandle frameId, "") \
 	ITERATOR2(wkeWebFrameHandle, wkeGetFrameHandleByUrl, wkeWebView webView, const utf8* url, "根据URL获得对应的frame handle，url参数为全路径地址，不存在则返回NULL") \
     \
@@ -102,7 +102,7 @@
     ITERATOR1(int, wkeGetWebviewId, wkeWebView webView, "") \
     ITERATOR1(bool, wkeIsWebviewAlive, int id, "") \
     \
-    ITERATOR3(const utf8*, wkeGetDocumentCompleteURL, wkeWebView webView, wkeWebFrameHandle frameId, const utf8* partialURL, "") \
+    ITERATOR3(const utf8*, wkeGetDocumentCompleteUrl, wkeWebView webView, wkeWebFrameHandle frameId, const utf8* partialURL, "") \
     \
     ITERATOR3(wkeMemBuf*, wkeCreateMemBuf, wkeWebView webView, void* buf, size_t length, "") \
     ITERATOR1(void, wkeFreeMemBuf, wkeMemBuf* buf, "") \
@@ -206,8 +206,8 @@
     \
     ITERATOR3(void, wkeOnMouseOverUrlChanged, wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam, "") \
     ITERATOR3(void, wkeOnTitleChanged, wkeWebView webView, wkeTitleChangedCallback callback, void* callbackParam, "") \
-    ITERATOR3(void, wkeOnURLChanged, wkeWebView webView, wkeURLChangedCallback callback, void* callbackParam, "") \
-    ITERATOR3(void, wkeOnURLChanged2, wkeWebView webView, wkeURLChangedCallback2 callback, void* callbackParam, "") \
+    ITERATOR3(void, wkeOnUrlChanged, wkeWebView webView, wkeUrlChangedCallback callback, void* callbackParam, "") \
+    ITERATOR3(void, wkeOnUrlChanged2, wkeWebView webView, wkeUrlChangedCallback2 callback, void* callbackParam, "") \
     ITERATOR3(void, wkeOnPaintUpdated, wkeWebView webView, wkePaintUpdatedCallback callback, void* callbackParam, "") \
     ITERATOR3(void, wkeOnPaintBitUpdated, wkeWebView webView, wkePaintBitUpdatedCallback callback, void* callbackParam, "") \
     ITERATOR3(void, wkeOnAlertBox, wkeWebView webView, wkeAlertBoxCallback callback, void* callbackParam, "") \
@@ -313,7 +313,7 @@
     \
     ITERATOR3(void, wkeSetMediaPlayerFactory, wkeWebView webView, wkeMediaPlayerFactory factory, wkeOnIsMediaPlayerSupportsMIMEType callback,"") \
     \
-    ITERATOR1(const utf8*, wkeUtilDecodeURLEscape, const utf8* url, "") \
+    ITERATOR1(const utf8*, wkeUtilDecodeUrlEscape, const utf8* url, "") \
     \
     ITERATOR3(void, jsBindFunction, const char* name, jsNativeFunction fn, unsigned int argCount, "") \
     ITERATOR2(void, jsBindGetter, const char* name, jsNativeFunction fn, "") \
@@ -418,7 +418,7 @@ WKE_FOR_EACH_DEFINE_FUNCTION(WKE_DEFINE_ITERATOR0, WKE_DEFINE_ITERATOR1, WKE_DEF
 
 	typedef void (WKE_CALL_TYPE *FN_wkeInitializeEx)(const wkeSettings* settings);
 
-__declspec(selectany) const wchar_t* kWkeDllPath = L"node.dll";
+__declspec(selectany) const wchar_t* kWkeDllPath = L"miniblink.dll";
 
 inline void wkeSetWkeDllPath(const wchar_t* dllPath)
 {

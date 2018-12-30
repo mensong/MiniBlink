@@ -370,43 +370,43 @@ void wkeShowDevtools(wkeWebView webView, const utf8* inspectorPath, wkeOnShowDev
 	webView->showDevTools(inspectorPath, callback, param);
 }
 
-void wkePostURL(wkeWebView wkeView,const utf8 * url,const char *szPostData,int nLen)
+void wkePostUrl(wkeWebView wkeView,const utf8 * url,const char *szPostData,int nLen)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     wkeView->loadPostURL(url,szPostData,nLen);
 }
 
-void wkePostURLW(wkeWebView wkeView,const wchar_t * url,const char *szPostData,int nLen)
+void wkePostUrlW(wkeWebView wkeView,const wchar_t * url,const char *szPostData,int nLen)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     wkeView->loadPostURL(url,szPostData,nLen);
 }
 
-void wkePostURL2(wkeWebView wkeView, const utf8 * url, const char *szPostData, int nLen, const utf8* contentType)
+void wkePostUrl2(wkeWebView wkeView, const utf8 * url, const char *szPostData, int nLen, const utf8* contentType)
 {
 	wke::checkThreadCallIsValid(__FUNCTION__);
 	wkeView->loadPostURL(url, szPostData, nLen, contentType);
 }
 
-void wkePostURLW2(wkeWebView wkeView, const wchar_t * url, const char *szPostData, int nLen, const wchar_t* contentType)
+void wkePostUrlW2(wkeWebView wkeView, const wchar_t * url, const char *szPostData, int nLen, const wchar_t* contentType)
 {
 	wke::checkThreadCallIsValid(__FUNCTION__);
 	wkeView->loadPostURL(url, szPostData, nLen, contentType);
 }
 
-void wkeLoadURL(wkeWebView webView, const utf8* url)
+void wkeLoadUrl(wkeWebView webView, const utf8* url)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->loadURL(url);
 }
 
-void wkeLoadURLW(wkeWebView webView, const wchar_t* url)
+void wkeLoadUrlW(wkeWebView webView, const wchar_t* url)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->loadURL(url);
 }
 
-void wkeLoadHTML(wkeWebView webView, const utf8* html)
+void wkeLoadHtml(wkeWebView webView, const utf8* html)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->loadHTML(html);
@@ -436,7 +436,7 @@ void wkeLoadFileW(wkeWebView webView, const wchar_t* filename)
     return webView->loadFile(filename);
 }
 
-const utf8* wkeGetURL(wkeWebView webView)
+const utf8* wkeGetUrl(wkeWebView webView)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     return webView->url();
@@ -993,13 +993,13 @@ void wkeOnMouseOverUrlChanged(wkeWebView webView, wkeTitleChangedCallback callba
     webView->onMouseOverUrlChanged(callback, callbackParam);
 }
 
-void wkeOnURLChanged(wkeWebView webView, wkeURLChangedCallback callback, void* callbackParam)
+void wkeOnUrlChanged(wkeWebView webView, wkeUrlChangedCallback callback, void* callbackParam)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->onURLChanged(callback, callbackParam);
 }
 
-void wkeOnURLChanged2(wkeWebView webView, wkeURLChangedCallback2 callback, void* callbackParam)
+void wkeOnUrlChanged2(wkeWebView webView, wkeUrlChangedCallback2 callback, void* callbackParam)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     webView->onURLChanged2(callback, callbackParam);
@@ -1710,7 +1710,7 @@ void wkeSetMediaPlayerFactory(wkeWebView webView, wkeMediaPlayerFactory factory,
     wke::g_onIsMediaPlayerSupportsMIMETypeCallback = callback;
 }
 
-const utf8* wkeUtilDecodeURLEscape(const utf8* url)
+const utf8* wkeUtilDecodeUrlEscape(const utf8* url)
 {
     String result = blink::decodeURLEscapeSequences(url);
     if (result.isNull() || result.isEmpty())
@@ -1731,7 +1731,7 @@ bool wkeIsWebviewAlive(int id)
     return net::ActivatingObjCheck::inst()->isActivating(id);
 }
 
-const utf8* wkeGetDocumentCompleteURL(wkeWebView webView, wkeWebFrameHandle frameId, const utf8* partialURL)
+const utf8* wkeGetDocumentCompleteUrl(wkeWebView webView, wkeWebFrameHandle frameId, const utf8* partialURL)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);
     content::WebPage* page = webView->webPage();
@@ -1798,7 +1798,7 @@ void wkeSetClientHandler(wkeWebView webView, const wkeClientHandler* handler)
     webView->setClientHandler(handler);
 
     wkeOnTitleChanged(webView, wkeTitleChangedCallbackWrap, (void*)handler);
-    wkeOnURLChanged(webView, wkeURLChangedCallbackWrap, (void*)handler);
+    wkeOnUrlChanged(webView, wkeURLChangedCallbackWrap, (void*)handler);
 }
 
 const wkeClientHandler* wkeGetClientHandler(wkeWebView webView)

@@ -290,7 +290,7 @@ LRESULT CWebWindow::_windowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
             if (uFilesCount != 0) {
                 UINT uRet = ::DragQueryFileW(hDrop, 0, (wchar_t*)szFile.data() + 8, MAX_PATH);
                 if (uRet != 0) {
-                    wkeLoadURLW(this, szFile.data());
+                    wkeLoadUrlW(this, szFile.data());
                     ::SetWindowTextW(hwnd, szFile.data());
                 }
             }

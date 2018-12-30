@@ -456,7 +456,7 @@ void WebContents::_loadURLApi(const std::string& url) {
     ThreadCall::callBlinkThreadAsync([self, str, id] {
         if (!IdLiveDetect::get()->isLive(id))
             return;
-        wkeLoadURL(self->m_view, str->c_str());
+        wkeLoadUrl(self->m_view, str->c_str());
         self->m_isLoading = false;
         delete str;
     });

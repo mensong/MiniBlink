@@ -21,7 +21,8 @@ bool splitStringToVector(const String& strData, const char strSplit, bool needTr
 
 void MByteToWChar(LPCSTR lpcszStr, DWORD cbMultiByte, std::vector<UChar>* out, UINT codePage);
 void WCharToMByte(LPCWSTR lpWideCharStr, DWORD cchWideChar, std::vector<char>* out, UINT codePage);
-
+void WCharToUtf8(LPCWSTR lpWideCharStr, DWORD cchWideChar, std::vector<char>* out);
+void MByteToUtf8(LPCSTR lpcszStr, DWORD cbMultiByte, std::vector<char>* out, UINT codePage);
 }
 
 #endif // WTFStringUtil_h

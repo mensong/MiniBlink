@@ -178,6 +178,20 @@ void WCharToMByte(LPCWSTR lpWideCharStr, DWORD cchWideChar, std::vector<char>* o
     WideCharToMultiByte(codePage, 0, lpWideCharStr, cchWideChar, &out->at(0), dwMinSize, NULL, FALSE);
 }
 
+void WCharToUtf8(LPCWSTR lpWideCharStr, DWORD cchWideChar, std::vector<char>* out)
+{
+	WCharToMByte(lpWideCharStr, cchWideChar, out, CP_UTF8);
+}
+
+void MByteToUtf8(LPCSTR lpcszStr, DWORD cbMultiByte, std::vector<char>* out, UINT codePage)
+{
+	std::vector<UChar> vctWSZ;
+	MByteToWChar(lpcszStr, cbMultiByte, &vctWSZ, codePage);
+	if (vctWSZ.size() == 0)
+		return;
+	WCharToUtf8(&(vctWSZ.at(0)), vctWSZ.size(), out);
+}
+
 bool splitStringToVector(const String& strData, const char strSplit, bool needTrim, WTF::Vector<String>& out)
 {
     ASSERT(strData.is8Bit());

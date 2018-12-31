@@ -1070,12 +1070,10 @@ int WebURLLoaderManager::addAsynchronousJob(WebURLLoaderInternal* job)
 
     KURL kurl = job->firstRequest()->url();
     String url = WTF::ensureStringToUTF8String(kurl.string());
-#if 0
-//     if (WTF::kNotFound != url.find("electron-ui/file:")) 
-//         OutputDebugStringA("");
-    
-    String outString = String::format("addAsynchronousJob : %d, %s\n", m_liveJobs.size(), WTF::ensureStringToUTF8(url, true).data());
-    OutputDebugStringW(outString.charactersWithNullTermination().data());
+
+#if 0    
+	String outString = String::format("addAsynchronousJob : %d, %s\n", m_liveJobs.size(), WTF::ensureStringToUTF8(url, true).data());
+	OutputDebugStringW(outString.charactersWithNullTermination().data());
 #endif
 
     if (wke::g_isDecodeUrlRequest && !kurl.protocolIsData()) {
@@ -1515,11 +1513,6 @@ void WebURLLoaderManager::timeoutOnMainThread(int jobId)
     WebURLLoaderInternal* job = autoLockJob.lock();
     if (!job)
         return;
-
-    OutputDebugStringW(L"timeoutOnMainThread:");
-    KURL kUrl = job->firstRequest()->url();
-    OutputDebugStringA(kUrl.string().utf8().data());
-    OutputDebugStringW(L"\n");
 
     BlackListCancelTask::cancel(job, kBlackListCancelJobId);
     cancel(jobId);

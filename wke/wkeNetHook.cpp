@@ -167,8 +167,11 @@ void wkeNetChangeRequestUrl(wkeNetJob jobPtr, const char* url)
     blink::KURL newUrl(blink::ParsedURLString, url);
     job->m_response.setURL(newUrl);
     job->firstRequest()->setURL(newUrl);
-    job->m_initializeHandleInfo->url = url;
-    ASSERT(!job->m_url);
+
+	if (job->m_initializeHandleInfo)
+		job->m_initializeHandleInfo->url = url;
+
+    //ASSERT(!job->m_url);
 }
 
 void wkeNetHoldJobToAsynCommit(wkeNetJob jobPtr)

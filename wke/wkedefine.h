@@ -383,6 +383,7 @@ typedef enum _wkeRequestType {
 	kWkeRequestTypePut,
 } wkeRequestType;
 
+typedef void(WKE_CALL_TYPE*wkeMouseOverUrlChangedCallback)(wkeWebView webView, void* param, const wkeString url);
 typedef void(WKE_CALL_TYPE*wkeTitleChangedCallback)(wkeWebView webView, void* param, const wkeString title);
 typedef void(WKE_CALL_TYPE*wkeUrlChangedCallback)(wkeWebView webView, void* param, const wkeString url);
 typedef void(WKE_CALL_TYPE*wkeUrlChangedCallback2)(wkeWebView webView, void* param, wkeWebFrameHandle frameId, const wkeString url);

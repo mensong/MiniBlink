@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
+
 #include "content/devtools/DevtoolsClient.h"
 
 #include "content/devtools/DevToolsAgent.h"
@@ -280,3 +282,5 @@ void DevToolsClient::didExitDebugLoop()
 }
 
 }
+
+#endif

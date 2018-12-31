@@ -367,9 +367,11 @@ protected:
     String m_proxy;
     net::ProxyType m_proxyType;
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     friend class ShowDevToolsTaskObserver;
     bool m_isCreatedDevTools;
     wkeWebView m_devToolsWebView;
+#endif
 
     wkeViewSettings m_settings;
 };

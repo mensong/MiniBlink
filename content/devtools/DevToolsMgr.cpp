@@ -1,3 +1,4 @@
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 
 #include "content/devtools/DevToolsMgr.h"
 
@@ -39,3 +40,5 @@ int DevToolsMgr::getNewestId()
 
 
 }
+
+#endif

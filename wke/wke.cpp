@@ -236,7 +236,9 @@ void wkeSetDebugConfig(wkeWebView webview, const char* debugString, const char* 
         } else if ("decodeUrlRequest" == item) {
             wke::g_isDecodeUrlRequest = true;
         } else if ("showDevTools" == item) {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
             webview->showDevTools(param, nullptr, nullptr);
+#endif
         } else if ("wakeMinInterval" == item) {
             wke::g_kWakeMinInterval = atoi(param);
         } else if ("drawMinInterval" == item) {
@@ -355,19 +357,23 @@ void wkeSetUserAgentW(wkeWebView webView, const wchar_t* userAgent)
     webView->setUserAgent(userAgent);
 }
 
-void wkeShowDevtoolsW(wkeWebView webView, const wchar_t* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param)
+void wkeShowDevtoolsW(wkeWebView webView, const wchar_t* inspectorFilePath, wkeOnShowDevtoolsCallback callback, void* param)
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     wke::checkThreadCallIsValid(__FUNCTION__);
     std::vector<char> pathUtf8;
-    WTF::WCharToMByte(inspectorPath, wcslen(inspectorPath), &pathUtf8, CP_UTF8);
+    WTF::WCharToMByte(inspectorFilePath, wcslen(inspectorFilePath), &pathUtf8, CP_UTF8);
 	pathUtf8.push_back('\0');
 	wkeShowDevtools(webView, &pathUtf8[0], callback, param);
+#endif
 }
 
-void wkeShowDevtools(wkeWebView webView, const utf8* inspectorPath, wkeOnShowDevtoolsCallback callback, void* param)
+void wkeShowDevtools(wkeWebView webView, const utf8* inspectorFilePath, wkeOnShowDevtoolsCallback callback, void* param)
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 	wke::checkThreadCallIsValid(__FUNCTION__);
-	webView->showDevTools(inspectorPath, callback, param);
+	webView->showDevTools(inspectorFilePath, callback, param);
+#endif
 }
 
 void wkePostUrl(wkeWebView wkeView,const utf8 * url,const char *szPostData,int nLen)

@@ -53,8 +53,10 @@ class PlatformEventHandler;
 class NavigationController;
 class PopupMenuWin;
 class ToolTip;
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 class DevToolsClient;
 class DevToolsAgent;
+#endif
 class DragHandle;
 
 class WebPageImpl 
@@ -87,10 +89,12 @@ public:
 
     void gc();
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     void didRunCreateDevToolsAgentTaskObserver();
 
     DevToolsAgent* createOrGetDevToolsAgent();
     DevToolsClient* createOrGetDevToolsClient();
+#endif
     
     // WebViewClient
     virtual void didInvalidateRect(const blink::WebRect&) override;
@@ -140,8 +144,6 @@ public:
     virtual void hideValidationMessage() override;
     virtual void moveValidationMessage(const blink::WebRect& anchorInViewport) override;
     
-    void testPaint();
-
     void beginMainFrame();
     
     void repaintRequested(const blink::IntRect& windowRect, bool forceRepaintIfEmptyRect);
@@ -252,7 +254,9 @@ public:
 
     static int64_t m_firstFrameId;
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     blink::WebThread::TaskObserver* m_createDevToolsAgentTaskObserver;
+#endif
 
     ToolTip* m_toolTip;
     ToolTip* m_validationMessageTip;
@@ -321,9 +325,11 @@ public:
     blink::Persistent<NavigationController> m_navigationController;
     blink::Persistent<PopupMenuWin> m_popup;
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     bool isDevToolsClient() const { return !!m_devToolsClient; }
     DevToolsClient* m_devToolsClient;
     DevToolsAgent* m_devToolsAgent;
+#endif
     void willEnterDebugLoop();
     void didExitDebugLoop();
     bool m_isEnterDebugLoop;

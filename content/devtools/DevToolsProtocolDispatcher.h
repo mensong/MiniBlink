@@ -1,3 +1,4 @@
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 
 #ifndef content_devtools_DevToolsProtocolDispatcher_h
 #define content_devtools_DevToolsProtocolDispatcher_h
@@ -29,3 +30,5 @@ private:
 }
 
 #endif // content_devtools_DevToolsProtocolDispatcher_h
+
+#endif

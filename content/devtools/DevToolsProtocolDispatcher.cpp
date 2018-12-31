@@ -1,3 +1,5 @@
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
+
 #include "content/devtools/DevToolsProtocolDispatcher.h"
 
 #include "content/devtools/DevtoolsClient.h"
@@ -126,3 +128,5 @@ bool DevToolsProtocolDispatcher::dispatcher(const std::string& message)
 }
 
 }
+
+#endif

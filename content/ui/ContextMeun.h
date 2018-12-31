@@ -104,8 +104,10 @@ public:
             m_imagePos = new blink::IntPoint(data.mousePosition);
         }
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
         if (m_webPage->isDevtoolsConneted())
             ::AppendMenu(m_popMenu, MF_STRING, kInspectElementAtId, L"检查");
+#endif
 
         if (data.isEditable) {
             ::AppendMenu(m_popMenu, MF_STRING, kCutId, L"剪切");

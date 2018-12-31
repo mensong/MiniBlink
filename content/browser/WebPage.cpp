@@ -16,8 +16,10 @@
 #endif
 #include "content/browser/WebPage.h"
 #include "content/browser/WebPageImpl.h"
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 #include "content/devtools/DevToolsClient.h"
 #include "content/devtools/DevToolsAgent.h"
+#endif
 
 extern WCHAR szTitle[];
 extern WCHAR szWindowClass[];
@@ -577,30 +579,40 @@ void WebPage::gc()
 
 void WebPage::onDocumentReady()
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (m_pageImpl->m_devToolsClient)
         m_pageImpl->m_devToolsClient->onDocumentReady();
+#endif
 }
 
 void WebPage::connetDevTools(WebPage* frontEnd, WebPage* embedder)
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     DevToolsAgent* devToolsAgent = embedder->m_pageImpl->createOrGetDevToolsAgent();
     DevToolsClient* devToolsClient = frontEnd->m_pageImpl->createOrGetDevToolsClient();
 
     devToolsAgent->setDevToolsClient(devToolsClient);
     devToolsClient->setDevToolsAgent(devToolsAgent);
+#endif
 }
 
 bool WebPage::isDevtoolsConneted() const
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (!m_pageImpl->m_devToolsAgent)
         return false;
     return m_pageImpl->m_devToolsAgent->isDevToolsClientConnet();
+#else
+	return false;
+#endif
 }
 
 void WebPage::inspectElementAt(int x, int y)
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (m_pageImpl->m_devToolsAgent)
         m_pageImpl->m_devToolsAgent->inspectElementAt(x, y);
+#endif
 }
 
 } // namespace WebCore

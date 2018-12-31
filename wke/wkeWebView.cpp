@@ -43,7 +43,9 @@ CWebView::CWebView()
     , m_name("miniblink", 0)
     , m_url("", 0)
     , m_isCokieEnabled(true)
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     , m_isCreatedDevTools(false)
+#endif
 {
     m_id = net::ActivatingObjCheck::inst()->genId();
     net::ActivatingObjCheck::inst()->add(m_id);
@@ -1113,12 +1115,12 @@ void defaultRunAlertBox(wkeWebView webView, void* param, const wkeString msg)
         msgBuf[maxShowLength - 7] = L'.';
         msgString = msgBuf.data();
     }
-    MessageBoxW(NULL, msgString, L"wke", MB_OK);
+    MessageBoxW(NULL, msgString, L"MiniBlink", MB_OK);
 }
 
 bool defaultRunConfirmBox(wkeWebView webView, void* param, const wkeString msg)
 {
-    int result = MessageBoxW(NULL, wkeGetStringW(msg), L"wke", MB_OKCANCEL);
+    int result = MessageBoxW(NULL, wkeGetStringW(msg), L"MiniBlink", MB_OKCANCEL);
     return result == IDOK;
 }
 
@@ -1136,7 +1138,7 @@ bool defaultRunPromptBox(wkeWebView webView, void* param, const wkeString msg, c
 	int y = (parentHeight - height) / 2;
 
 	_InitInputBoxW(NULL);
-	*result =  _InputBoxW(wkeGetStringW(msg), L"MiniBlink PromptBox", wkeGetStringW(c), x, y);
+	*result =  _InputBoxW(wkeGetStringW(msg), L"MiniBlink", wkeGetStringW(c), x, y);
     return true;
 }
 
@@ -1386,6 +1388,7 @@ void CWebView::setProxyInfo(const String& host,	unsigned long port,	net::ProxyTy
     }
 }
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 class ShowDevToolsTaskObserver : public blink::WebThread::TaskObserver {
 public:
     ShowDevToolsTaskObserver(CWebView* parent, const std::string& url, wkeOnShowDevtoolsCallback callback, void* param)
@@ -1401,9 +1404,9 @@ public:
     {
         CWebView* parent = (CWebView*)param;
         parent->m_isCreatedDevTools = false;
-		parent->m_devToolsWebView = NULL;
-		parent->webPage()->webPageImpl()->m_devToolsAgent = NULL;
-		parent->webPage()->webPageImpl()->m_devToolsClient = NULL;
+		//parent->m_devToolsWebView = NULL;
+		//parent->webPage()->webPageImpl()->m_devToolsAgent = NULL;
+		//parent->webPage()->webPageImpl()->m_devToolsClient = NULL;
     }
 
     virtual void willProcessTask() override
@@ -1444,6 +1447,7 @@ void CWebView::showDevTools(const utf8* url, wkeOnShowDevtoolsCallback callback,
     m_isCreatedDevTools = true;
     blink::Platform::current()->currentThread()->addTaskObserver(new ShowDevToolsTaskObserver(this, url, callback, param));
 }
+#endif
 
 void CWebView::setCookieJarPath(const utf8* path)
 {

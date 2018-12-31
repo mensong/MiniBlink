@@ -53,8 +53,10 @@
 #include "content/web_impl_win/BlinkPlatformImpl.h"
 #include "content/web_impl_win/WebThreadImpl.h"
 #include "content/web_impl_win/npapi/PluginDatabase.h"
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 #include "content/devtools/DevToolsClient.h"
 #include "content/devtools/DevToolsAgent.h"
+#endif
 #include "cc/trees/LayerTreeHost.h"
 #include "cc/base/BdColor.h"
 
@@ -115,7 +117,9 @@ WebPageImpl::WebPageImpl()
 {
     m_pagePtr = 0;
     m_bdColor = RGB(199, 237, 204) | 0xff000000;
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     m_createDevToolsAgentTaskObserver = nullptr;
+#endif
     n_needAutoDrawToHwnd = true;
     m_webViewImpl = nullptr;
     m_debugCount = 0;
@@ -142,8 +146,10 @@ WebPageImpl::WebPageImpl()
     m_firstDrawCount = 0;
     m_webFrameClient = new content::WebFrameClientImpl();
     m_platformCursor = nullptr;
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     m_devToolsClient = nullptr;
     m_devToolsAgent = nullptr;
+#endif
     m_isEnterDebugLoop = false;
     m_draggableRegion = ::CreateRectRgn(0, 0, 0, 0); // Create a HRGN representing the draggable window area.
     m_pageNetExtraData = nullptr;
@@ -198,10 +204,12 @@ WebPageImpl::~WebPageImpl()
     ASSERT(pageDestroyed == m_state);
     m_state = pageDestroyed;
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (m_createDevToolsAgentTaskObserver) {
         blink::Platform::current()->currentThread()->removeTaskObserver(m_createDevToolsAgentTaskObserver);
         delete m_createDevToolsAgentTaskObserver;
     }
+#endif
 
     if (m_screenInfo)
         delete m_screenInfo;
@@ -244,6 +252,7 @@ wke::CWebView* WebPageImpl::wkeWebView() const
 }
 #endif
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 class CreateDevToolsAgentTaskObserver : public blink::WebThread::TaskObserver {
 public:
     CreateDevToolsAgentTaskObserver(WebPageImpl* parent)
@@ -272,6 +281,7 @@ void WebPageImpl::didRunCreateDevToolsAgentTaskObserver()
 {
     m_createDevToolsAgentTaskObserver = nullptr;
 }
+#endif
 
 void WebPageImpl::init(WebPage* pagePtr, HWND hWnd)
 {
@@ -290,9 +300,11 @@ void WebPageImpl::init(WebPage* pagePtr, HWND hWnd)
     String output = String::format("WebPageImpl::init: %p\n", this);
     OutputDebugStringA(output.utf8().data());
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     // DevToolsAgent必须先创建，不然无法记录执行环境，会导致console无法执行js
     m_createDevToolsAgentTaskObserver = new CreateDevToolsAgentTaskObserver(this);
     blink::Platform::current()->currentThread()->addTaskObserver(m_createDevToolsAgentTaskObserver);
+#endif
 
     m_state = pageInited;
 }
@@ -498,6 +510,7 @@ WebView* WebPageImpl::createView(WebLocalFrame* creator,
 #endif
 }
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
 DevToolsAgent* WebPageImpl::createOrGetDevToolsAgent()
 {
     if (m_devToolsAgent)
@@ -513,10 +526,7 @@ DevToolsClient* WebPageImpl::createOrGetDevToolsClient()
     m_devToolsClient = new DevToolsClient(m_pagePtr, (blink::WebLocalFrame*)m_webViewImpl->mainFrame());
     return m_devToolsClient;
 }
-
-void WebPageImpl::testPaint()
-{
-}
+#endif
 
 void WebPageImpl::freeV8TempObejctOnOneFrameBefore()
 {
@@ -609,6 +619,7 @@ void WebPageImpl::doClose()
     content::WebThreadImpl* threadImpl = nullptr;
     threadImpl = (content::WebThreadImpl*)(blink::Platform::current()->currentThread());
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (m_devToolsClient)
         delete m_devToolsClient;
 
@@ -616,6 +627,7 @@ void WebPageImpl::doClose()
         m_devToolsAgent->onDetach();
         delete m_devToolsAgent;
     }
+#endif
 
     //m_webViewImpl->mainFrameImpl()->close();
     m_webViewImpl->close();
@@ -1000,10 +1012,15 @@ static bool canPaintToScreen(blink::WebViewImpl* webViewImpl)
 
 bool WebPageImpl::needDrawToScreen(HWND hWnd) const
 {
+
     if (!hWnd)
         return false;
 
-    if (blink::RuntimeEnabledFeatures::updataInOtherThreadEnabled() && !m_devToolsClient)
+    if (blink::RuntimeEnabledFeatures::updataInOtherThreadEnabled() 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
+		&& !m_devToolsClient
+#endif
+		)
         return false;
 #if (defined ENABLE_CEF) && (ENABLE_CEF == 1)
     if (m_browser && m_browser->IsWindowless())
@@ -2107,20 +2124,24 @@ bool WebPageImpl::runFileChooser(const blink::WebFileChooserParams& params, blin
 
 void WebPageImpl::willEnterDebugLoop()
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (m_devToolsAgent)
         m_isEnterDebugLoop = true;
 
     if (m_devToolsClient)
         m_webViewImpl->setIgnoreInputEvents(false);
+#endif
 }
 
 void WebPageImpl::didExitDebugLoop()
 {
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
     if (m_devToolsAgent)
         m_isEnterDebugLoop = false;
 
     if (m_devToolsClient)
         m_webViewImpl->setIgnoreInputEvents(true);
+#endif
 }
 
 void WebPageImpl::setCookieJarFilePath(const char* path)

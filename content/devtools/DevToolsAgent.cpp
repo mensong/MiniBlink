@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#if (defined ENABLE_DEVTOOLS) && (ENABLE_DEVTOOLS == 1)
+
 #include "content/devtools/DevToolsAgent.h"
 #include "content/devtools/DevToolsClient.h"
 #include "content/devtools/DevToolsMgr.h"
@@ -281,3 +283,5 @@ void DevToolsAgent::disableTracing()
 }
 
 }
+
+#endif

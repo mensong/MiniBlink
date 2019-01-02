@@ -49,10 +49,15 @@ BOOL _InitVar()
 	return TRUE;
 }
 
+#define BUTTON_WIDTH 65
+#define ITEM_HEIGHT 20
+#define GAP 5
+
 int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	HDC hWndDc;
 	WORD uBtnID;
+
 	switch(uMsg)
 	{
 	case WM_DESTROY:
@@ -61,13 +66,15 @@ int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		::PostQuitMessage(0);
 		break;
 	case WM_CREATE:
+		RECT rectClient;
+		::GetClientRect(hWnd, &rectClient);
 		_hMsgText = ::CreateWindowExW(0,
 									L"Static",
 									_lpWndMsg,
 									WS_CHILD | WS_VISIBLE,
-									5,
-									5,
-									275,
+									rectClient.left + GAP,
+									rectClient.top + GAP,
+									rectClient.right - rectClient.left - 2*GAP - BUTTON_WIDTH,
 									70,
 									hWnd,
 									(HMENU)1000,
@@ -77,10 +84,10 @@ int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 									L"Button",
 									L"确定(&K)",
 									WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON,
-									285,
-									5,
-									65,
-									20,
+									rectClient.right - GAP - BUTTON_WIDTH,
+									rectClient.top + GAP,
+									BUTTON_WIDTH,
+									ITEM_HEIGHT,
 									hWnd,
 									(HMENU)IDOK,
 									_hInstance,
@@ -89,10 +96,10 @@ int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 										L"Button",
 										L"取消(&C)",
 										WS_CHILD | WS_VISIBLE,
-										285,
-										30,
-										65,
-										20,
+										rectClient.right - GAP - BUTTON_WIDTH,
+										rectClient.top + GAP + ITEM_HEIGHT + GAP,
+										BUTTON_WIDTH,
+										ITEM_HEIGHT,
 										hWnd,
 										(HMENU)IDCANCEL,
 										_hInstance,
@@ -101,10 +108,10 @@ int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 									 L"Button",
 									 L"帮助(&H)",
 									 WS_CHILD | WS_VISIBLE,
-									 285,
-									 55,
-									 65,
-									 20,
+									 rectClient.right - GAP - BUTTON_WIDTH,
+									 rectClient.top + GAP + (ITEM_HEIGHT + GAP)*2,
+									 BUTTON_WIDTH,
+									 ITEM_HEIGHT,
 									 hWnd,
 									 (HMENU)IDHELP,
 									 _hInstance,
@@ -113,10 +120,10 @@ int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							      L"Edit",
 							      _lpDefValue,
 							      _nEditStyle,
-							      5,
-							      80,
-							      350,
-							      20,
+							      rectClient.left + GAP,
+							      rectClient.bottom - ITEM_HEIGHT - GAP,
+							      rectClient.right - rectClient.left - 2*GAP,
+							      ITEM_HEIGHT,
 							      hWnd,
 							      (HMENU)2000,
 							      _hInstance,

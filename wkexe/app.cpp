@@ -6,6 +6,8 @@
 #include <wke.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <algorithm>
 
 #include <shellapi.h>
 #pragma comment(lib, "shell32.lib")
@@ -233,6 +235,14 @@ void HandleConsole(wkeWebView webView, void* param, wkeConsoleLevel level, const
 	
 }
 
+bool HandleResponse(wkeWebView webView, void* param, const char* url, wkeNetJob job)
+{
+	//这里不能执行js的内容，有可能会出错
+	jsExecState es = wkeGlobalExec(webView);
+
+	return false;
+}
+
 // 创建主页面窗口
 BOOL CreateWebWindow(Application* app)
 {
@@ -254,6 +264,7 @@ BOOL CreateWebWindow(Application* app)
 	wkeOnResponse(app->window, HandleNetResponse, app);
 	wkeNetGetFavicon(app->window, HandleNetGetFavicon, app);
 	wkeOnConsole(app->window, HandleConsole, app);
+	wkeOnResponse(app->window, HandleResponse, app);
 
     wkeMoveToCenter(app->window);
 	wkeShowWindow(app->window, true);
@@ -356,6 +367,47 @@ jsValue WKE_CALL_TYPE js_postUrl(jsExecState es, void* param)
 	return jsUndefined();
 }
 
+jsValue WKE_CALL_TYPE js_wkeShowDevtools(jsExecState es, void* param)
+{
+	Application* app = (Application*)param;
+
+	int nArgc = jsArgCount(es);
+	if (nArgc == 1)
+	{
+		jsValue jv0 = jsArg(es, 0);
+		if (!jsIsString(jv0))
+			return jsBoolean(false);
+		const utf8* path = jsToString(es, jv0);
+		std::string sPath;
+		std::string sPathUpper = path;
+		std::transform(sPathUpper.begin(), sPathUpper.end(), sPathUpper.begin(), ::toupper);
+		if (sPathUpper.substr(0, strlen("FILE://")) != "FILE://" &&
+			sPathUpper.substr(0, strlen("HTTP")) != "HTTP")
+		{//处理相对路径的问题
+			if (sPathUpper.size() >= 4 && sPathUpper[1] != ':')
+			{//相对路径
+				char dir[MAX_PATH] = { 0 };
+				GetCurrentDirectoryA(MAX_PATH, dir);
+				sPath = dir;
+				sPath += "\\";
+				sPath += path;
+			}
+			else
+			{
+				sPath = path;
+			}
+		}
+		else
+		{
+			sPath = path;
+		}
+
+		wkeShowDevtools(app->window, sPath.c_str(), NULL, NULL);
+		return jsBoolean(true);
+	}
+	return jsBoolean(false);
+}
+
 void InitJsBinding(Application* app)
 {
 	wkeJsBindFunction("foo", js_foo, app, 1);
@@ -365,6 +417,7 @@ void InitJsBinding(Application* app)
 	wkeJsBindSetter("wmyVal", js_setMyVal, NULL);
 	wkeJsBindFunction("loadUrl", js_loadUrl, app, 1);
 	wkeJsBindFunction("postUrl", js_postUrl, app, 3);
+	wkeJsBindFunction("wkeShowDevtools", js_wkeShowDevtools, app, 1);
 }
 
 void RunApplication(Application* app)

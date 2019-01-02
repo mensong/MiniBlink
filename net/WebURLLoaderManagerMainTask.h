@@ -356,12 +356,22 @@ static bool isDownloadResponse(WebURLLoaderInternal* job, const AtomicString& co
 
 #if ENABLE_WKE == 1
 static bool dispatchResponseToWke(WebURLLoaderInternal* job, const AtomicString& contentType)
-{
+{	
     RequestExtraData* requestExtraData = reinterpret_cast<RequestExtraData*>(job->firstRequest()->extraData());
     if (!requestExtraData)
         return false;
 
     WebPage* page = requestExtraData->page;
+
+	//Gergul: 打开http://chat.workerman.net/等winsocket网站，当注册了wkeOnResponse后，如果在回调中对wkeWebView进行操作，
+	//  关闭窗口将会崩溃。原因是 窗口关闭后，后台等待的连接没有断开，一返回Response就出错了
+	if (page->webPageImpl() == NULL)
+	{
+		blink::WebLocalFrame* frame = requestExtraData->frame;
+		frame->stopLoading();
+		return true;
+	}
+
     Vector<char> urlBuf = WTF::ensureStringToUTF8(job->firstRequest()->url().string(), true);
 
     if (page->wkeHandler().netResponseCallback) {

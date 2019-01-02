@@ -1,0 +1,44 @@
+<html>
+ <head></head>
+ <body style="font-size:16px;">
+  输入网址: &nbsp;
+  <input id="myurl" style="width:400px;" onkeydown="if(event.keyCode==13)GoURL();" value="https://www.baidu.com/" />
+  <button onclick="GoURL();">GO</button><button onclick="wkeShowDevtools('../WebInspector/inspector.html');">DevTools</button>
+  <hr />
+  <a href="index.html" target="_blank">新窗口</a>
+  <br />
+  <a href="http://www.taobao.com/">淘宝</a>
+  <br />
+  <a href="http://www.youku.com/">优酷</a>
+  <br />
+  <a href="http://kugou.id.sn.cn/parse.php">audio元素测试</a>
+  <br />
+  <a href="http://www.youzu.com/">游族</a>
+  <br />
+  <a href="http://www.baidu.com/">百度</a>
+  <br />
+  <a href="http://pan.baidu.com/">百度网盘</a>
+  <br />
+  <a href="http://map.baidu.com/">百度地图</a>
+  <br />
+  <a href="http://www.le.com/">乐视</a>
+  <br />
+  <a href="http://download.csdn.net/">CSDN</a>
+  <br />
+  <a href="http://www.yvoschaap.com/chainrxn/">2D测试</a>
+  <br />
+  <a href="https://www.benjoffe.com/code/demos/canvascape/textures">3D测试</a>
+  <br />
+  <a href="http://www.jz5u.com/soft/softdown.asp?softid=18109">下载测试</a>
+  <br />
+  <a href="http://workerman.net:8383/">蝌蚪聊天室</a>
+  <br />
+  <a href="http://chat.workerman.net/">Websocket聊天室</a>
+  <br />
+  <a href="http://www.workerman.net/demos/browserquest/">Websocket在线游戏</a>
+  <br />
+  <a href="http://www.163.com/">网易</a>
+  <br />
+  <script>function GoURL(){document.location=document.getElementById('myurl').value;}</script>
+ </body>
+</html>

@@ -8208,7 +8208,9 @@
     <ClInclude Include="..\..\content\ui\ClipboardUtil.h" />
     <ClInclude Include="..\..\content\ui\COMPtr.h" />
     <ClInclude Include="..\..\content\ui\ContextMeun.h" />
+    <ClInclude Include="..\..\content\ui\CustomTheme.h" />
     <ClInclude Include="..\..\content\ui\DragHandle.h" />
+    <ClInclude Include="..\..\content\ui\NativeThemeWin.h" />
     <ClInclude Include="..\..\content\ui\PlatformCursor.h" />
     <ClInclude Include="..\..\content\ui\PopupMenuWin.h" />
     <ClInclude Include="..\..\content\ui\PopupMenuWinClient.h" />
@@ -8629,9 +8631,7 @@
     <ClInclude Include="..\..\content\resources\WebKitWebRes.h" />
     <ClInclude Include="..\..\content\web_impl_win\BlinkPlatformImpl.h" />
     <ClInclude Include="..\..\content\web_impl_win\CurrentTimeImpl.h" />
-    <ClInclude Include="..\..\content\web_impl_win\CustomTheme.h" />
     <ClInclude Include="..\..\content\web_impl_win\MissingImageData.h" />
-    <ClInclude Include="..\..\content\web_impl_win\NativeThemeWin.h" />
     <ClInclude Include="..\..\content\web_impl_win\npapi\PluginDatabase.h" />
     <ClInclude Include="..\..\content\web_impl_win\npapi\PluginMainThreadScheduler.h" />
     <ClInclude Include="..\..\content\web_impl_win\npapi\PluginMessageThrottlerWin.h" />

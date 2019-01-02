@@ -20303,9 +20303,6 @@
     <ClInclude Include="..\..\content\web_impl_win\MissingImageData.h">
       <Filter>content\web_impl_win</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\content\web_impl_win\NativeThemeWin.h">
-      <Filter>content\web_impl_win</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\content\web_impl_win\WebMimeRegistryImpl.h">
       <Filter>content\web_impl_win</Filter>
     </ClInclude>
@@ -20923,9 +20920,6 @@
     </ClInclude>
     <ClInclude Include="..\..\cc\tiles\TileGrid.h">
       <Filter>cc\tiles</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\content\web_impl_win\CustomTheme.h">
-      <Filter>content\web_impl_win</Filter>
     </ClInclude>
     <ClInclude Include="..\..\net\RequestExtraData.h">
       <Filter>net</Filter>
@@ -23096,6 +23090,12 @@
     </ClInclude>
     <ClInclude Include="..\..\wke\wkeInputBoxW.h">
       <Filter>wke</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\content\ui\CustomTheme.h">
+      <Filter>content\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\content\ui\NativeThemeWin.h">
+      <Filter>content\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1431,6 +1431,12 @@ HWND wkeGetWindowHandle(wkeWebView webWindow)
         return NULL;
 }
 
+bool wkeIsWebViewValid(wkeWebView webWindow)
+{
+	wke::checkThreadCallIsValid(__FUNCTION__);
+	return wke::g_liveWebViews.find(webWindow) != wke::g_liveWebViews.end();
+}
+
 void wkeOnWindowClosing(wkeWebView webWindow, wkeWindowClosingCallback callback, void* param)
 {
     wke::checkThreadCallIsValid(__FUNCTION__);

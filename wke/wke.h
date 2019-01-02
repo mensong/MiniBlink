@@ -281,6 +281,7 @@
     ITERATOR6(wkeWebView, wkeCreateWebWindow, wkeWindowType type, HWND parent, int x, int y, int width, int height, "") \
     ITERATOR1(void, wkeDestroyWebWindow, wkeWebView webWindow, "") \
     ITERATOR1(HWND, wkeGetWindowHandle, wkeWebView webWindow, "") \
+	ITERATOR1(bool, wkeIsWebViewValid, wkeWebView webWindow, "") \
     \
     ITERATOR2(void, wkeShowWindow, wkeWebView webWindow, bool show, "") \
     ITERATOR2(void, wkeEnableWindow, wkeWebView webWindow, bool enable, "") \

@@ -110,6 +110,7 @@ void wkeNetSetData(wkeNetJob jobPtr, void* buf, int len)
     job->m_asynWkeNetSetData->resize(len);
     memcpy(job->m_asynWkeNetSetData->data(), buf, len);
     
+	job->m_isHoldJobToAsynCommit = false;
     job->m_isWkeNetSetDataBeSetted = true;
 }
 

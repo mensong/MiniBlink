@@ -1,6 +1,31 @@
 #include "wkeDialogResizeBorder.h"
 #include <tchar.h>
 
+#if (defined USING_VC6RT) && (USING_VC6RT==1)
+#define LWA_COLORKEY 0x00000001
+#define LWA_ALPHA 0x00000002
+typedef BOOL(FAR WINAPI *LAYERFUNC)(HWND, COLORREF, BYTE, DWORD);
+
+BOOL SetLayeredWindowAttributes(HWND hwnd, COLORREF crKey, BYTE bAlpha, DWORD dwFlags)
+{
+	//要使使窗体拥有透明效果,首先要有WS_EX_LAYERED扩展属性，方法可以在CreateWindowEx时指定，
+	//也可以SetWindowLong动态设置。如下代码可设置分层窗口：
+
+	LONG t = GetWindowLong(hwnd, GWL_EXSTYLE);
+	t |= WS_EX_LAYERED;
+	SetWindowLong(hwnd, GWL_EXSTYLE, t);
+
+	//以上代码也可以通过ModifyWindow函数添加 WS_EX_LAYERED属性。
+
+	LAYERFUNC SetLayer;
+	HMODULE hmod = LoadLibraryA("user32.dll");
+	SetLayer = (LAYERFUNC)GetProcAddress(hmod, "SetLayeredWindowAttributes");
+	BOOL bReturn = SetLayer(hwnd, crKey, bAlpha, dwFlags);
+	FreeLibrary(hmod);
+	return bReturn;
+}
+#endif
+
 std::map<HWND, HCURSOR> CDialogResizeBorder::ms_mpCursors;
 std::map<HWND, int> CDialogResizeBorder::ms_mpHitTestType;
 std::map<HWND, CDialogResizeBorder*> CDialogResizeBorder::ms_wndClass;

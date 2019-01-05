@@ -12,3 +12,4 @@ bin/cookies.dat
 /build/miniblink/bak
 /build/miniblink/bak2
 /test/LocalStorage/*.localstorage
+/build/miniblink/miniblink.res

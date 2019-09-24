@@ -1,6 +1,5 @@
 ﻿
 #include "app.h"
-#include "cmdline.h"
 #include "path.h"
 
 #include <wke.h>
@@ -15,110 +14,6 @@
 #include <shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 
-BOOL FixupHtmlFileUrl(LPCWSTR pathOption, LPWSTR urlBuffer, size_t bufferSize)
-{
-    WCHAR htmlPath[MAX_PATH + 1] = { 0 };
-
-    if (pathOption[0] == 0)
-    {
-        do
-        {
-            GetWorkingPath(htmlPath, MAX_PATH, L"index.html");
-            if (PathFileExistsW(htmlPath))
-                break;
-
-            GetWorkingPath(htmlPath, MAX_PATH, L"main.html");
-            if (PathFileExistsW(htmlPath))
-                break;
-
-            GetWorkingPath(htmlPath, MAX_PATH, L"wkexe.html");
-            if (PathFileExistsW(htmlPath))
-                break;    
-
-            GetProgramPath(htmlPath, MAX_PATH, L"index.html");
-            if (PathFileExistsW(htmlPath))
-                break;    
-
-            GetProgramPath(htmlPath, MAX_PATH, L"main.html");
-            if (PathFileExistsW(htmlPath))
-                break;
-
-            GetProgramPath(htmlPath, MAX_PATH, L"wkexe.html");
-            if (PathFileExistsW(htmlPath))
-                break;
-
-            return FALSE;
-        }
-        while (0);
-
-        swprintf_s(urlBuffer, bufferSize, L"file:///%s", htmlPath);
-        return TRUE;
-    }
-
-    else//if (!wcsstr(pathOption, L"://"))
-    {
-        do
-        {
-            GetWorkingPath(htmlPath, MAX_PATH, pathOption);
-            if (PathFileExistsW(htmlPath))
-                break;
-
-            GetProgramPath(htmlPath, MAX_PATH, pathOption);
-            if (PathFileExistsW(htmlPath))
-                break;
-
-            return FALSE;
-        }
-        while (0);
-
-        swprintf_s(urlBuffer, bufferSize, L"file:///%s", htmlPath);
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
-BOOL FixupHtmlUrl(Application* app)
-{
-    LPWSTR htmlOption = app->options.htmlFile;
-    WCHAR htmlUrl[MAX_PATH + 1] = { 0 };
-
-#if 1
-	wcsncpy_s(app->url, MAX_PATH, htmlOption, MAX_PATH);
-	return TRUE;
-#else
-    // 包含 :// 说明是完整的URL
-    if (wcsstr(htmlOption, L"://"))
-    {
-        wcsncpy_s(app->url, MAX_PATH, htmlOption, MAX_PATH);
-        return TRUE;
-    }
-
-    // 若不是完整URL，补全之
-    if (FixupHtmlFileUrl(htmlOption, htmlUrl, MAX_PATH))
-    {
-        wcsncpy_s(app->url, MAX_PATH, htmlUrl, MAX_PATH);
-        return TRUE;
-    }
-    // 无法获得完整的URL，出错
-    return FALSE;
-#endif
-}
-
-BOOL ProcessOptions(Application* app)
-{
-#if 1
-	int argc = 0;
-	LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
-	ParseOptions(argc, argv, &app->options);
-	LocalFree(argv);
-#else
-	app->options.showHelp = 0;
-	wcscpy(app->options.htmlFile, L"https://www.baidu.com");
-	app->options.transparent = 1;
-#endif
-    return TRUE;
-}
 
 // 回调：点击了关闭、返回 true 将销毁窗口，返回 false 什么都不做。
 bool HandleWindowClosing(wkeWebView webWindow, void* param)
@@ -246,7 +141,7 @@ bool HandleResponse(wkeWebView webView, void* param, const char* url, wkeNetJob 
 // 创建主页面窗口
 BOOL CreateWebWindow(Application* app)
 {
-    if (app->options.transparent)
+    if (app->transparent)
         app->window = wkeCreateWebWindow(WKE_WINDOW_TYPE_TRANSPARENT, NULL, 0, 0, 800, 600);
     else
         app->window = wkeCreateWebWindow(WKE_WINDOW_TYPE_POPUP, NULL, 0, 0, 800, 600);
@@ -276,7 +171,7 @@ BOOL CreateWebWindow(Application* app)
 
     wkeLoadUrlW(app->window, app->url);
 
-	if (app->options.transparent)
+	if (app->transparent)
 		wkeCreateResizeBorders(app->window, true, true, true, true, true, true, true, true);
 
 	//wkeSetMouseEnabled(app->window, false);
@@ -284,9 +179,8 @@ BOOL CreateWebWindow(Application* app)
     return TRUE;
 }
 
-void PrintHelpAndQuit(Application* app)
+void Quit(Application* app)
 {
-    PrintHelp();
     PostQuitMessage(0);
 }
 
@@ -424,24 +318,16 @@ void RunApplication(Application* app)
 {
     memset(app, 0, sizeof(Application));
 
-    if (!ProcessOptions(app))
-    {
-        PrintHelpAndQuit(app);
-        return;
-    }
+	app->transparent = false;//窗口不透明
 
-    if (!FixupHtmlUrl(app))
-    {
-        PrintHelpAndQuit(app);
-		//打开默认页面
-		wcsncpy_s(app->url, MAX_PATH, L"http://www.baidu.com", MAX_PATH);
-    }
+	//打开默认页面
+	wcsncpy_s(app->url, MAX_PATH, L"https://www.baidu.com", MAX_PATH);
 
 	InitJsBinding(app);
 
     if (!CreateWebWindow(app))
     {
-        PrintHelpAndQuit(app);
+        Quit(app);
         return;
     }
 

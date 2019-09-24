@@ -18,27 +18,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cmdline.h">
-      <Filter>wkexe</Filter>
-    </ClInclude>
-    <ClInclude Include="getopt.h">
-      <Filter>wkexe</Filter>
-    </ClInclude>
     <ClInclude Include="app.h">
       <Filter>wkexe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cmdline.cpp">
-      <Filter>wkexe</Filter>
-    </ClCompile>
     <ClCompile Include="path.cpp">
       <Filter>wkexe</Filter>
     </ClCompile>
     <ClCompile Include="app.cpp">
-      <Filter>wkexe</Filter>
-    </ClCompile>
-    <ClCompile Include="getopt.c">
       <Filter>wkexe</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">

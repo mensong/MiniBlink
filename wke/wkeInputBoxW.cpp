@@ -1,3 +1,4 @@
+//#include "stdafx.h"
 #include "wkeInputBoxW.h"
 
 int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -43,9 +44,9 @@ BOOL _InitVar()
 	_hDesktop = ::GetDesktopWindow();
 	::GetWindowRect(_hDesktop,&_st_rcDesktop);
 	if (!_xPos)
-		_xPos = (_st_rcDesktop.right - 365) / 2;
+		_xPos = (_st_rcDesktop.right - INPUT_BOX_WIDTH) / 2;
 	if (!_yPos)
-		_yPos = (_st_rcDesktop.bottom - 130) / 2;
+		_yPos = (_st_rcDesktop.bottom - INPUT_BOX_HEIGHT) / 2;
 	return TRUE;
 }
 
@@ -129,6 +130,7 @@ int WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							      _hInstance,
 							      0);
 		::SendMessageW(_hEdit, EM_SETLIMITTEXT, _nMaxSize, 0);
+		::SendMessage(_hEdit, EM_SETSEL, 0, -1);//全部选择默认文字
 		_hWndFont = ::CreateFontW(12,
 								 6,
 								 0,
@@ -198,7 +200,7 @@ HWND _CreateWindow(HINSTANCE hInst)
 	st_WndClass.lpszClassName = L"InputBox_Class";
 	st_WndClass.style         = CS_HREDRAW | CS_VREDRAW;
 	::RegisterClassExW(&st_WndClass);
-	hWnd = ::CreateWindowExW(0,
+	hWnd = ::CreateWindowExW(WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
 						    L"InputBox_Class",
 						    _lpWndTitle,
 						    WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE,
@@ -233,7 +235,7 @@ int _Run(HWND hWnd)
 	return st_Msg.wParam;
 }
 
-wchar_t *_InputBoxW(const wchar_t *lpWndMsg,
+const wchar_t *_InputBoxW(const wchar_t *lpWndMsg,
 				const wchar_t *lpWndTitle,
 				const wchar_t *lpDefValue,
 				int xPos,
@@ -251,6 +253,7 @@ wchar_t *_InputBoxW(const wchar_t *lpWndMsg,
 	if (!_hInstance)
 		_InitVar();
 	_Run(_CreateWindow(_hInstance));
+	_hInstance = NULL;
 	return _szBuffer;
 }
 

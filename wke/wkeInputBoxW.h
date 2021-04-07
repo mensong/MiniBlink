@@ -28,7 +28,7 @@ void _SetMaxSizeW(unsigned int nLineSize);// ¿ÉÑ¡£¬¸Ãº¯ÊıÊÇÉèÖÃEdit¿ÉÒÔÊäÈë×î´ó×
 /*               ; Õâ¸ö²ÎÊı¾ÍÊÇHelpÎÄ¼şµÄË÷Òı            */
 /*  Èç¹ûº¯Êı³É¹¦£¬·µ»ØÒ»¸öchar *Ö¸Õë£¬°üº¬ÓÃ»§ÊäÈëµÄÄÚÈİ */
 /*********************************************************/
-wchar_t *_InputBoxW(const wchar_t *lpWndMsg,
+const wchar_t *_InputBoxW(const wchar_t *lpWndMsg,
                 const wchar_t *lpWndTitle = L"¹¤³Ì!",
                 const wchar_t *lpDefValue = L"",
                 int xPos = 0,
